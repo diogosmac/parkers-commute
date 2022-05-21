@@ -38,12 +38,9 @@ For more information regarding the organization of this Thesis, you can visit th
 
 ## How to Run
 
-To run, you need to run a simple HTTP server to serve the resources of the game.
+To run, you need an application bundler to wrap everything together. In my case, I used **Parcel**, which is available on **Node.js**.
+1. You need to have `node.js` installed on your computer.
+2. Open your terminal, and run `npm install -g parcel-bundler` to install the bundler.
+3. Run the program by running `parcel index.html` on the terminal, from the `game` directory. You can specify the port by adding `-p <port-number>` to the command. The default port is `1234`.
 
-The simplest solution, I've found, is to have `Python 3` installed, and run the command:
-
-```
-python3 -m http.server <port>
-```
-
-The game will then be available at `localhost:<port>`!
+The game will then be available at `localhost:<port-number>`!
