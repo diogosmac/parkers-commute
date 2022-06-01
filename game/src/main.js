@@ -1,3 +1,4 @@
+import { LevelScene } from './scenes/LevelScene';
 import { LoadScene } from './scenes/LoadScene'
 import { MenuScene } from './scenes/MenuScene'
 
@@ -6,7 +7,8 @@ let game = new Phaser.Game({
     height: 600,
     scene: [
         LoadScene,
-        MenuScene
+        MenuScene,
+        LevelScene
     ]
 });
 

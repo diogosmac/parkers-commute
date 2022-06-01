@@ -16,15 +16,24 @@ export class MenuScene extends Phaser.Scene {
     create() {      // creating the menu screen
 
         // create images (z order)
-        this.add.image(0, 0, 'title_bg').setOrigin(0).setDepth(0)
-        this.add.image(this.game.renderer.width / 2, this.game.renderer.height * 0.20, 'logo').setDepth(2)
-        let playButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, 'play_button').setDepth(2)
-        let optionsButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2 + 100, 'options_button').setDepth(2)
+        this.add.image(0, 0, CST.TITLE.BACKGROUND).setOrigin(0).setDepth(0)
+        let playButton = this.add.image(
+            this.game.renderer.width / 2,
+            this.game.renderer.height / 2,
+            CST.TITLE.PLAY
+        ).setDepth(2)
+        let optionsButton = this.add.image(
+            this.game.renderer.width / 2,
+            this.game.renderer.height / 2 + 100,
+            CST.TITLE.OPTIONS
+        ).setDepth(2)
 
         // create sprites (if using pixel art, remove sharpen)
-        let hoverSprite = this.add.image(100, 100, 'mini')
-        hoverSprite.setScale(0.75)
-        hoverSprite.setVisible(false)
+        let hoverSprite = this.add.image(
+            100,
+            100,
+            CST.TITLE.MINI
+        ).setScale(0.75).setVisible(false)
 
         // create audio, disable pauseonblur
         // this.sound.pauseOnBlur = false
@@ -43,28 +52,28 @@ export class MenuScene extends Phaser.Scene {
         // */
 
         playButton.setInteractive()
-        playButton.on('pointerover', () => {
+        playButton.on(CST.MOUSE.HOVER, () => {
             hoverSprite.x = playButton.x - playButton.width * 0.8
             hoverSprite.y = playButton.y
             hoverSprite.setVisible(true)
         })
-        playButton.on('pointerout', () => {
+        playButton.on(CST.MOUSE.LEAVE, () => {
             hoverSprite.setVisible(false)
         })
-        playButton.on('pointerup', () => {
-            console.info('PLAY: button clicked')
+        playButton.on(CST.MOUSE.CLICK_RELEASE, () => {
+            this.scene.start(CST.SCENES.LEVEL)
         })
 
         optionsButton.setInteractive()
-        optionsButton.on('pointerover', () => {
+        optionsButton.on(CST.MOUSE.HOVER, () => {
             hoverSprite.x = optionsButton.x - optionsButton.width * 0.8
             hoverSprite.y = optionsButton.y
             hoverSprite.setVisible(true)
         })
-        optionsButton.on('pointerout', () => {
+        optionsButton.on(CST.MOUSE.LEAVE, () => {
             hoverSprite.setVisible(false)
         })
-        optionsButton.on('pointerup', () => {
+        optionsButton.on(CST.MOUSE.CLICK_RELEASE, () => {
             console.info('OPTIONS: button clicked')
         })
 
