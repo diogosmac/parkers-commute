@@ -16,70 +16,69 @@ export class LevelScene extends Phaser.Scene {
             temperature: '20ºC',
             humidity: '77%',
             max_battery: '40%',
-            current_battery: '0%',
+            max_battery_dec: 0.4,
         }
 
         // gameplay elements for the level
         this.gameplay = {
-            destinations: [
-                {
-                    name: 'Home',
+            current_battery: '0%',
+            next_route: 1,
+            selected_route: null,
+            destinations: {
+                'Home': {
                     icon: CST.DEST.HOME,
                     icon_out: CST.DEST.HOME_OUT,
-                    uses: 1
+                    route: CST.LEVEL.ROUTE.HOME,
+                    uses: 1,
+                    screen_position: {
+                        x: 282,
+                        y: 23
+                    },
                     // eventually coordinates
                     // to calculate distance
                 },
-                {
-                    name: 'Work',
+                'Work': {
                     icon: CST.DEST.WORK,
                     icon_out: CST.DEST.WORK_OUT,
-                    uses: 1
+                    route: CST.LEVEL.ROUTE.WORK,
+                    uses: 1,
+                    screen_position: {
+                        x: 373.18, // 282 + 91.18
+                        y: 23
+                    },
                 }
+            },
+            routes: [
+                {
+                    name: CST.LEVEL.ROUTE.HOME,
+                    icon: null,
+                },
             ],
-            routes: [],
+        }
+
+        this.visual = {
+            openRoutes: [null],
+            closedRoutes: [null, null]
         }
     }
     preload() {
 
     }
     create() {
-
-        // INTERFACE SETUP
-
-        this.add.image(0, 0, CST.LEVEL.BACKGROUND).setOrigin(0).setDepth(0)
-        this.add.image(53, 24, this.level_data.weather).setOrigin(0).setDepth(1)
-        this.add.image(177, 29, CST.ICONS.TEMPERATURE).setOrigin(0).setDepth(1)
-        this.add.image(177, 64, CST.ICONS.HUMIDITY).setOrigin(0).setDepth(1)
-        this.add.image(695.55, 28, CST.ICONS.BATTERY).setOrigin(0).setDepth(1)
-        this.add.image(53, 136, CST.PLACEHOLDER.MAP).setOrigin(0).setDepth(1)
-        this.add.image(688, 136, CST.PLACEHOLDER.POWERUPS).setOrigin(0).setDepth(1)
-
-        /**
-         * Centering text:
-         *      x = position_x + (width / 2)
-         *      y = position_y + (height / 2)
-         *      Then, place the text in (x,y), and call setOrigin(0.5)
-         */
-        this.add.text(153.5, 41.5, this.level_data.temperature, CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
-        this.add.text(153.5, 76.5, this.level_data.humidity, CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
-        this.add.text(661.78, 64, this.level_data.max_battery, CST.STYLES.FLAVOR_LARGE).setOrigin(0.5)
+        this.setupInterface()
 
         for (let i in this.gameplay.destinations) {
-            let dest = this.gameplay.destinations[i]
-            this.add.image(282 + i * 91.18, 23, dest.icon).setOrigin(0).setDepth(1)
-            this.add.text(350.63 + i * 91.18, 36.56, dest.uses, CST.STYLES.DEST_USES).setOrigin(0.5).setDepth(2)
+            this.placeDestinationSquare(i)
         }
 
-        this.add.image(53, 528, CST.LEVEL.BATTERY.FULL).setOrigin(0).setDepth(1)
-        this.add.text(542.64, 546.5, this.level_data.current_battery, CST.STYLES.BATTERY_PERCENTAGE).setOrigin(0.5).setDepth(2)
+        this.setupBatteryBar()
 
         /**
-         * Actual Code
+         * *** Actual Code
          */
 
         // // for (let i = 0; i < 8; i++) {
-        // //     let show = this.add.image(53 + i * 90, 429, CST.LEVEL.ROUTE.OPEN).setOrigin(0).setDepth(1)
+        // //     let show = this.add.image(53 + i * 90, 429, CST.LEVEL.ROUTE.HOME).setOrigin(0).setDepth(1)
         // //     if (i) {
         // //         let hide = this.add.image(53 + i * 90, 429, CST.LEVEL.ROUTE.CLOSED).setOrigin(0).setDepth(2)
         // //         this.gameplay.routes.push([show, hide])
@@ -92,34 +91,41 @@ export class LevelScene extends Phaser.Scene {
         // //  this.add.image(593, 528, CST.LEVEL.GO.USABLE).setOrigin(0).setDepth(1)
 
         /**
-         * End of Actual Code
+         * *** End of Actual Code
          */
 
         /**
-         * Progress Update Demo Code
+         * *** Progress Update Demo Code
          */
-        let canShow = []
-        let canHide = []
-
         for (let i = 0; i < 8; i++) {
-            if (i) {
-                canShow.push(
-                    this.add.image(53 + i * 90, 429, CST.LEVEL.ROUTE.OPEN).setOrigin(0).setDepth(1)
-                )
-                canHide.push(
-                    this.add.image(53 + i * 90, 429, CST.LEVEL.ROUTE.CLOSED).setOrigin(0).setDepth(2)
-                )
-            } else this.add.image(53 + i * 90, 429, CST.LEVEL.ROUTE.OPEN).setOrigin(0).setDepth(1)
+            this.placeRouteSlot(i, 53 + i * 90, 429)
         }
 
-        for (let i in canHide) {
-            canShow[i].setInteractive()
-            canHide[i].setInteractive()
-            canHide[i].on(CST.MOUSE.CLICK_RELEASE, () => {
-                canHide[i].setVisible(!canHide[i].visible)
-            })
-            canShow[i].on(CST.MOUSE.CLICK_RELEASE, () => {
-                canHide[i].setVisible(!canHide[i].visible)
+        for (let i in this.visual.closedRoutes) {
+            if (i < 1) { continue }
+            this.visual.openRoutes[i].setInteractive()
+            if (i > 1) this.visual.closedRoutes[i].setInteractive()
+            this.visual.openRoutes[i].on(CST.MOUSE.CLICK_RELEASE, () => {
+                if (this.gameplay.selected_route !== null) {
+                    let selected = this.gameplay.selected_route
+                    let last = this.gameplay.routes[this.gameplay.next_route - 1]
+                    if (selected !== last.name) {
+                        this.gameplay.routes[this.gameplay.next_route] = {
+                            name: selected,
+                            icon: this.add.image(
+                                this.visual.openRoutes[this.gameplay.next_route].x,
+                                this.visual.openRoutes[this.gameplay.next_route].y,
+                                this.gameplay.destinations[this.gameplay.selected_route].route
+                            ).setOrigin(0).setDepth(2)
+                        }
+                        this.gameplay.next_route++
+                        this.visual.closedRoutes[this.gameplay.next_route].setVisible(false)
+                        let dest = this.gameplay.destinations[selected]
+                        dest.text.setText(--dest.uses)
+                        this.gameplay.selected_route = null
+                        this.visual.dest_outline.setVisible(false)
+                    }
+                }
             })
         }
 
@@ -136,8 +142,104 @@ export class LevelScene extends Phaser.Scene {
             goButton.setVisible(false)
         })
         /**
-         * End of Progress Update Demo Code
+         * *** End of Progress Update Demo Code
          */
 
+    }
+
+    /**
+     * +++ AUX FUNCTIONS
+     */
+    setupInterface() {
+        /**
+         * @@@  Centering text:
+         *      x = position_x + (width / 2)
+         *      y = position_y + (height / 2)
+         *      Then, place the text in (x,y), and call setOrigin(0.5)
+         */
+
+        // // set background
+        this.add.image(0, 0, CST.LEVEL.BACKGROUND).setOrigin(0).setDepth(0)
+
+        // // set weather on top left
+        this.add.image(53, 24, this.level_data.weather).setOrigin(0).setDepth(1)
+        // // // set temperature and icon
+        this.add.text(153.5, 41.5, this.level_data.temperature, CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
+        this.add.image(177, 29, CST.ICONS.TEMPERATURE).setOrigin(0).setDepth(1)
+        // // // set humidity and icon
+        this.add.text(153.5, 76.5, this.level_data.humidity, CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
+        this.add.image(177, 64, CST.ICONS.HUMIDITY).setOrigin(0).setDepth(1)
+
+        // // set max battery for level on top right
+        this.add.image(695.55, 28, CST.ICONS.BATTERY).setOrigin(0).setDepth(1)
+        this.add.text(661.78, 64, this.level_data.max_battery, CST.STYLES.FLAVOR_LARGE).setOrigin(0.5)
+
+        // // place map and power-up bar placeholders
+        this.add.image(53, 136, CST.PLACEHOLDER.MAP).setOrigin(0).setDepth(1)
+        this.add.image(688, 136, CST.PLACEHOLDER.POWERUPS).setOrigin(0).setDepth(1)
+
+        // // add destination selection outline image
+        this.visual.dest_outline = this.add.image(
+            0,
+            18,
+            CST.DEST.SELECTED
+        ).setOrigin(0).setDepth(1).setVisible(false)
+    }
+
+    // place possible destinations on top of screen
+    placeDestinationSquare(i) {
+        let dest = this.gameplay.destinations[i]
+        let route = this.add.image(
+            dest.screen_position.x,
+            dest.screen_position.y,
+            dest.icon
+        ).setOrigin(0).setDepth(1)
+        route.setInteractive()
+        route.on(CST.MOUSE.CLICK_RELEASE, () => {
+            if (dest.route === this.gameplay.selected_route) {
+                this.gameplay.selected_route = null
+                this.visual.dest_outline.setVisible(false)
+            } else {
+                this.gameplay.selected_route = i
+                this.visual.dest_outline.x = dest.screen_position.x
+                this.visual.dest_outline.setVisible(true)
+            }
+        })
+        dest.text = this.add.text(
+            dest.screen_position.x + 68.63,
+            dest.screen_position.y + 13.56,
+            dest.uses,
+            CST.STYLES.DEST_USES
+        ).setOrigin(0.5).setDepth(2)
+    }
+
+    // place route slots on bottom of screen
+    placeRouteSlot(i, x, y) {
+        if (i) {
+            this.visual.openRoutes.push(
+                this.add.image(x, y, CST.LEVEL.ROUTE.OPEN).setOrigin(0).setDepth(1)
+            )
+            if (i > 1) {
+                this.visual.closedRoutes.push(
+                    this.add.image(x, y, CST.LEVEL.ROUTE.CLOSED).setOrigin(0).setDepth(2)
+                )
+            }
+        } else {
+            let icon = this.add.image(x, y, CST.LEVEL.ROUTE.HOME).setOrigin(0).setDepth(1)
+            this.gameplay.routes[0].icon = icon
+        }
+    }
+
+    // place battery bar and cut usable portion based on percentage
+    setupBatteryBar() {
+        /**
+         * @@@ INFO ON CROPPING IMAGES
+         * https://www.html5gamedevs.com/topic/36973-showing-cropped-image/
+         */
+        let full = this.add.image(53, 528, CST.LEVEL.BATTERY.FULL).setOrigin(0).setDepth(1)
+        let usable = this.add.image(53, 528, CST.LEVEL.BATTERY.USABLE).setOrigin(0).setDepth(2)
+        usable.frame.cutWidth = full.frame.width * this.level_data.max_battery_dec
+        usable.frame.updateUVs();
+        this.add.text(542.64, 546.5, this.gameplay.current_battery, CST.STYLES.BATTERY_PERCENTAGE).setOrigin(0.5).setDepth(3)
     }
 }

@@ -29,7 +29,10 @@ export const CST = {
     },
     DEST: {
         HOME: 'level_dest_home',
+        HOME_OUT: 'level_dest_home_out',
         WORK: 'level_dest_work',
+        WORK_OUT: 'level_dest_work_out',
+        SELECTED: 'level_dest_selected',
     },
     LEVEL: {
         BACKGROUND: 'level_bg',
@@ -39,7 +42,9 @@ export const CST = {
         },
         ROUTE: {
             OPEN: 'level_route_open',
-            CLOSED: 'level_route_closed'
+            CLOSED: 'level_route_closed',
+            HOME: 'level_route_home',
+            WORK: 'level_route_work',
         },
         GO: {
             UNUSABLE: 'level_go_unusable',
