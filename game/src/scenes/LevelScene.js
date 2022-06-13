@@ -13,9 +13,9 @@ export class LevelScene extends Phaser.Scene {
         // flavor data for the level
         this.level_data = {
             weather: CST.WEATHER.SUNNY,
-            temperature: '20ºC',
-            humidity: '77%',
-            max_battery: '40%',
+            temperature: '20',
+            humidity: '77',
+            max_battery: '40',
             max_battery_dec: 0.4,
         }
 
@@ -150,15 +150,15 @@ export class LevelScene extends Phaser.Scene {
         // // set weather on top left
         this.add.image(53, 24, this.level_data.weather).setOrigin(0).setDepth(1)
         // // // set temperature and icon
-        this.add.text(153.5, 41.5, this.level_data.temperature, CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
+        this.add.text(153.5, 41.5, this.level_data.temperature + 'ºC', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
         this.add.image(177, 29, CST.ICONS.TEMPERATURE).setOrigin(0).setDepth(1)
         // // // set humidity and icon
-        this.add.text(153.5, 76.5, this.level_data.humidity, CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
+        this.add.text(153.5, 76.5, this.level_data.humidity + '%', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
         this.add.image(177, 64, CST.ICONS.HUMIDITY).setOrigin(0).setDepth(1)
 
         // // set max battery for level on top right
         this.add.image(695.55, 28, CST.ICONS.BATTERY).setOrigin(0).setDepth(1)
-        this.add.text(661.78, 64, this.level_data.max_battery, CST.STYLES.FLAVOR_LARGE).setOrigin(0.5)
+        this.add.text(661.78, 64, this.level_data.max_battery + '%', CST.STYLES.FLAVOR_LARGE).setOrigin(0.5)
 
         // // place map and power-up bar placeholders
         this.add.image(53, 136, CST.PLACEHOLDER.MAP).setOrigin(0).setDepth(1)
