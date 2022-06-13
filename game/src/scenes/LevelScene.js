@@ -57,8 +57,12 @@ export class LevelScene extends Phaser.Scene {
         }
 
         this.visual = {
-            openRoutes: [null],
-            closedRoutes: [null, null]
+            // first route will never be open, as it is always "home"
+            openRoutes: [
+                { occupied: true, name: 'Home', icon: null }
+            ],
+            // first and second routes will never be closed, as the first route is always set
+            closedRoutes: [null, null],
         }
     }
     preload() {
@@ -73,40 +77,20 @@ export class LevelScene extends Phaser.Scene {
 
         this.setupBatteryBar()
 
-        /**
-         * *** Actual Code
-         */
-
-        // // for (let i = 0; i < 8; i++) {
-        // //     let show = this.add.image(53 + i * 90, 429, CST.LEVEL.ROUTE.HOME).setOrigin(0).setDepth(1)
-        // //     if (i) {
-        // //         let hide = this.add.image(53 + i * 90, 429, CST.LEVEL.ROUTE.CLOSED).setOrigin(0).setDepth(2)
-        // //         this.gameplay.routes.push([show, hide])
-        // //     } else {
-        // //         this.gameplay.routes.push([show])
-        // //     }
-        // // }
-
-        // //  this.add.image(593, 528, CST.LEVEL.GO.UNUSABLE).setOrigin(0).setDepth(1)
-        // //  this.add.image(593, 528, CST.LEVEL.GO.USABLE).setOrigin(0).setDepth(1)
-
-        /**
-         * *** End of Actual Code
-         */
-
-        /**
-         * *** Progress Update Demo Code
-         */
         for (let i = 0; i < 8; i++) {
             this.placeRouteSlot(i, 53 + i * 90, 429)
         }
 
+        // iterating over indexes, not the actual closed routes
         for (let i in this.visual.closedRoutes) {
             if (i < 1) { continue }
             this.visual.openRoutes[i].setInteractive()
             if (i > 1) this.visual.closedRoutes[i].setInteractive()
             this.visual.openRoutes[i].on(CST.MOUSE.CLICK_RELEASE, () => {
                 if (this.gameplay.selected_route !== null) {
+                    if (this.visual.openRoutes[i].occupied) {
+                        return
+                    }
                     let selected = this.gameplay.selected_route
                     let last = this.gameplay.routes[this.gameplay.next_route - 1]
                     if (selected !== last.name) {
@@ -116,12 +100,14 @@ export class LevelScene extends Phaser.Scene {
                                 this.visual.openRoutes[this.gameplay.next_route].x,
                                 this.visual.openRoutes[this.gameplay.next_route].y,
                                 this.gameplay.destinations[this.gameplay.selected_route].route
-                            ).setOrigin(0).setDepth(2)
+                            ).setOrigin(0).setDepth(2),
+                            occupied: true
                         }
                         this.gameplay.next_route++
                         this.visual.closedRoutes[this.gameplay.next_route].setVisible(false)
                         let dest = this.gameplay.destinations[selected]
-                        dest.text.setText(--dest.uses)
+                        dest.uses--
+                        this.updateDestDisplay(dest)
                         this.gameplay.selected_route = null
                         this.visual.dest_outline.setVisible(false)
                     }
@@ -189,17 +175,27 @@ export class LevelScene extends Phaser.Scene {
     // place possible destinations on top of screen
     placeDestinationSquare(i) {
         let dest = this.gameplay.destinations[i]
-        let route = this.add.image(
+        dest.icon = this.add.image(
             dest.screen_position.x,
             dest.screen_position.y,
             dest.icon
         ).setOrigin(0).setDepth(1)
-        route.setInteractive()
-        route.on(CST.MOUSE.CLICK_RELEASE, () => {
-            if (dest.route === this.gameplay.selected_route) {
+        dest.icon_out = this.add.image(
+            dest.screen_position.x,
+            dest.screen_position.y,
+            dest.icon_out
+        ).setOrigin(0).setDepth(1).setVisible(false)
+        // let route = this.add.image(
+        //     dest.screen_position.x,
+        //     dest.screen_position.y,
+        //     dest.icon
+        // ).setOrigin(0).setDepth(1)
+        dest.icon.setInteractive()
+        dest.icon.on(CST.MOUSE.CLICK_RELEASE, () => {
+            if (i === this.gameplay.selected_route) {
                 this.gameplay.selected_route = null
                 this.visual.dest_outline.setVisible(false)
-            } else {
+            } else if (dest.uses > 0) {
                 this.gameplay.selected_route = i
                 this.visual.dest_outline.x = dest.screen_position.x
                 this.visual.dest_outline.setVisible(true)
@@ -211,6 +207,12 @@ export class LevelScene extends Phaser.Scene {
             dest.uses,
             CST.STYLES.DEST_USES
         ).setOrigin(0.5).setDepth(2)
+    }
+
+    updateDestDisplay(dest) {
+        dest.icon.setVisible(dest.uses > 0)
+        dest.icon_out.setVisible(dest.uses === 0)
+        dest.text.setText(dest.uses)
     }
 
     // place route slots on bottom of screen
