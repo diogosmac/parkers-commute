@@ -50,17 +50,17 @@ export class LevelScene extends Phaser.Scene {
             },
             routes: [
                 {
-                    name: CST.LEVEL.ROUTE.HOME,
-                    icon: null,
+                    name: 'Home',
+                    icon: CST.LEVEL.ROUTE.HOME,
                 },
             ],
         }
 
         this.visual = {
-            // first route will never be open, as it is always "home"
-            openRoutes: [
-                { occupied: true, name: 'Home', icon: null }
-            ],
+            // open routes are the white squares that signal an available route slot
+            // the first slot is always occupied (home)
+            openRoutes: [ null ],
+            // closed routes are the grey squares that signal an unavailable route slot
             // first and second routes will never be closed, as the first route is always set
             closedRoutes: [null, null],
         }
@@ -69,6 +69,7 @@ export class LevelScene extends Phaser.Scene {
 
     }
     create() {
+        this.input.mouse.disableContextMenu()
         this.setupInterface()
 
         for (let i in this.gameplay.destinations) {
@@ -86,9 +87,28 @@ export class LevelScene extends Phaser.Scene {
             if (i < 1) { continue }
             this.visual.openRoutes[i].setInteractive()
             if (i > 1) this.visual.closedRoutes[i].setInteractive()
-            this.visual.openRoutes[i].on(CST.MOUSE.CLICK_RELEASE, () => {
+            this.visual.openRoutes[i].on(CST.MOUSE.CLICK, (pointer) => {
+                let curr = parseInt(i)
+                if (pointer.rightButtonDown()) {
+                    let next = curr + 1
+                    if (
+                        this.gameplay.routes[curr] !== undefined &&
+                        this.gameplay.routes[next] === undefined
+                    ) {
+                        let route = this.gameplay.routes[curr]
+                        let dest = this.gameplay.destinations[route.name]
+                        route.icon.destroy()
+                        dest.uses++
+                        this.updateDestDisplay(dest)
+                        this.gameplay.routes.pop(curr)
+                        this.visual.closedRoutes[this.gameplay.next_route].setVisible(true)
+                        this.gameplay.next_route--
+                    }
+                    return
+                }
+
                 if (this.gameplay.selected_route !== null) {
-                    if (this.visual.openRoutes[i].occupied) {
+                    if (this.gameplay.routes[curr] !== undefined) {
                         return
                     }
                     let selected = this.gameplay.selected_route
@@ -227,7 +247,7 @@ export class LevelScene extends Phaser.Scene {
                 )
             }
         } else {
-            let icon = this.add.image(x, y, CST.LEVEL.ROUTE.HOME).setOrigin(0).setDepth(1)
+            let icon = this.add.image(x, y, this.gameplay.routes[0].icon).setOrigin(0).setDepth(1)
             this.gameplay.routes[0].icon = icon
         }
     }
