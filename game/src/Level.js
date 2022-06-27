@@ -121,9 +121,11 @@ export const LEVEL = {
             dest.uses++
             LEVEL.updateDestDisplay(dest)
             level.gameplay.routes.pop(curr)
-            level.visual.closedRoutes[level.gameplay.next_route].setVisible(true)
-            level.gameplay.next_route--
+            level.visual.closedRoutes[level.gameplay.next_route--].setVisible(true)
             this.updateGMapsUrl(level)
+            if (level.gameplay.next_route == 1) {
+                level.visual.goButton.setVisible(false)
+            }
         }
     },
 
@@ -144,14 +146,16 @@ export const LEVEL = {
                     ).setOrigin(0).setDepth(2),
                     occupied: true
                 }
-                level.gameplay.next_route++
-                level.visual.closedRoutes[level.gameplay.next_route].setVisible(false)
+                level.visual.closedRoutes[++level.gameplay.next_route].setVisible(false)
                 let dest = level.gameplay.destinations[selected]
                 dest.uses--
                 LEVEL.updateDestDisplay(dest)
                 level.gameplay.selected_route = null
                 level.visual.dest_outline.setVisible(false)
                 this.updateGMapsUrl(level)
+                if (level.gameplay.next_route > 1) {
+                    level.visual.goButton.setVisible(true)
+                }
             }
         }
     },
@@ -174,18 +178,34 @@ export const LEVEL = {
     },
 
     setupGoButton(level) {
-        let goUnusable = level.add.image(593, 528, CST.LEVEL.GO.UNUSABLE).setOrigin(0).setDepth(1)
+        level.add.image(593, 528, CST.LEVEL.GO.UNUSABLE).setOrigin(0).setDepth(1)
         let goButton = level.add.image(593, 528, CST.LEVEL.GO.USABLE).setOrigin(0).setDepth(1)
 
         goButton.setVisible(false)
+        goButton.setInteractive()
 
-        goUnusable.setInteractive()
-        goUnusable.on(CST.MOUSE.HOVER, () => {
-            goButton.setVisible(true)
+        goButton.on(CST.MOUSE.CLICK, () => {
+            let apiUrl = this.getDirectionsUrl(level)
+            console.log(apiUrl)
         })
-        goUnusable.on(CST.MOUSE.LEAVE, () => {
-            goButton.setVisible(false)
-        })
+
+        return goButton
+    },
+
+    getDirectionsUrl(level) {
+        let waypoints = this.generateGMapsWaypoints(level.gameplay)
+        if (waypoints.length < 2) return
+        let base = 'https://maps.googleapis.com/maps/api/directions/json'
+        let api = '?key=' + CONFIG.API_KEY
+        let pref = '&mode=driving&units=metric'
+        let orig = '&origin=' + waypoints[0]
+        let dest = '&destination=' + waypoints[waypoints.length-1]
+        let url = base + api + pref + orig + dest
+        if (waypoints.length > 2) {
+            let wayp = '&waypoints=' + waypoints.slice(1, waypoints.length-1).join('|')
+            url += wayp
+        }
+        return url
     },
 
     updateGMapsUrl(level) {

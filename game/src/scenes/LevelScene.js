@@ -37,8 +37,6 @@ export class LevelScene extends Phaser.Scene {
                         y: 23
                     },
                     map_url: CONFIG.LOCATIONS.HOME,
-                    // eventually coordinates
-                    // to calculate distance
                 },
                 'Work': {
                     icon: CST.DEST.WORK,
@@ -95,7 +93,7 @@ export class LevelScene extends Phaser.Scene {
 
         LEVEL.setupRoutes(this)
 
-        LEVEL.setupGoButton(this)
+        this.visual.goButton = LEVEL.setupGoButton(this)
 
     }
 
