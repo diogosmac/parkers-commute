@@ -1,3 +1,4 @@
 game/.cache
+game/src/config.js
 game/dist/*
 !game/dist/assets

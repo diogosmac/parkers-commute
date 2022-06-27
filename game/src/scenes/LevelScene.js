@@ -1,3 +1,4 @@
+import { CONFIG } from '../config'
 import { CST } from '../CST'
 import { LEVEL } from '../Level'
 
@@ -35,6 +36,7 @@ export class LevelScene extends Phaser.Scene {
                         x: 282,
                         y: 23
                     },
+                    map_url: CONFIG.LOCATIONS.HOME,
                     // eventually coordinates
                     // to calculate distance
                 },
@@ -47,6 +49,7 @@ export class LevelScene extends Phaser.Scene {
                         x: 373.18, // 282 + 91.18
                         y: 23
                     },
+                    map_url: CONFIG.LOCATIONS.WORK,
                 }
             },
             routes: [
@@ -59,19 +62,23 @@ export class LevelScene extends Phaser.Scene {
 
     }
     preload() {
+        // constant between levels - will be in general "generateLevel" function
+        this.visual = {
+            map_place: document.getElementById('gm-place'),
+            map_directions: document.getElementById('gm-directions')
+        }
 
+        this.visual.map_place.style.display = 'block'
+        LEVEL.updateGMapsUrl(this)
     }
     create() {
 
-        // constant between levels - will be in general "generateLevel" function
-        this.visual = {
-            // open routes are the white squares that signal an available route slot
-            // the first slot is always occupied (home)
-            openRoutes: [ null ],
-            // closed routes are the grey squares that signal an unavailable route slot
-            // first and second routes will never be closed, as the first route is always set
-            closedRoutes: [null, null],
-        }
+        // open routes are the white squares that signal an available route slot
+        // the first slot is always occupied (home)
+        this.visual.openRoutes = [ null ]
+        // closed routes are the grey squares that signal an unavailable route slot
+        // first and second routes will never be closed, as the first route is always set
+        this.visual.closedRoutes = [ null, null ]
 
         this.input.mouse.disableContextMenu()
         LEVEL.setupInterface(this)

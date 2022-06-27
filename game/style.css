@@ -1,0 +1,21 @@
+canvas {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 0;
+}
+
+.google-maps {
+    display: none;
+    position: relative;
+    top: 136px;
+    left: 53px;
+}
+
+#gm-place {
+    z-index: 1;
+}
+
+#gm-directions {
+    z-index: 2;
+}

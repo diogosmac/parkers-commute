@@ -1,3 +1,4 @@
+import { CONFIG } from './config'
 import { CST } from './CST'
 
 export const LEVEL = {
@@ -122,6 +123,36 @@ export const LEVEL = {
             level.gameplay.routes.pop(curr)
             level.visual.closedRoutes[level.gameplay.next_route].setVisible(true)
             level.gameplay.next_route--
+            this.updateGMapsUrl(level)
+        }
+    },
+
+    checkAndAddRoute(level, curr) {
+        if (level.gameplay.selected_route !== null) {
+            if (level.gameplay.routes[curr] !== undefined) {
+                return
+            }
+            let selected = level.gameplay.selected_route
+            let last = level.gameplay.routes[level.gameplay.next_route - 1]
+            if (selected !== last.name) {
+                level.gameplay.routes[level.gameplay.next_route] = {
+                    name: selected,
+                    icon: level.add.image(
+                        level.visual.openRoutes[level.gameplay.next_route].x,
+                        level.visual.openRoutes[level.gameplay.next_route].y,
+                        level.gameplay.destinations[level.gameplay.selected_route].route
+                    ).setOrigin(0).setDepth(2),
+                    occupied: true
+                }
+                level.gameplay.next_route++
+                level.visual.closedRoutes[level.gameplay.next_route].setVisible(false)
+                let dest = level.gameplay.destinations[selected]
+                dest.uses--
+                LEVEL.updateDestDisplay(dest)
+                level.gameplay.selected_route = null
+                level.visual.dest_outline.setVisible(false)
+                this.updateGMapsUrl(level)
+            }
         }
     },
 
@@ -134,48 +165,10 @@ export const LEVEL = {
             level.visual.openRoutes[i].on(CST.MOUSE.CLICK, (pointer) => {
                 let curr = parseInt(i)
                 if (pointer.rightButtonDown()) {
-                    let next = curr + 1
-                    if (
-                        level.gameplay.routes[curr] !== undefined &&
-                        level.gameplay.routes[next] === undefined
-                    ) {
-                        let route = level.gameplay.routes[curr]
-                        let dest = level.gameplay.destinations[route.name]
-                        route.icon.destroy()
-                        dest.uses++
-                        LEVEL.updateDestDisplay(dest)
-                        level.gameplay.routes.pop(curr)
-                        level.visual.closedRoutes[level.gameplay.next_route].setVisible(true)
-                        level.gameplay.next_route--
-                    }
+                    this.checkAndRemoveRoute(level, curr)
                     return
                 }
-
-                if (level.gameplay.selected_route !== null) {
-                    if (level.gameplay.routes[curr] !== undefined) {
-                        return
-                    }
-                    let selected = level.gameplay.selected_route
-                    let last = level.gameplay.routes[level.gameplay.next_route - 1]
-                    if (selected !== last.name) {
-                        level.gameplay.routes[level.gameplay.next_route] = {
-                            name: selected,
-                            icon: level.add.image(
-                                level.visual.openRoutes[level.gameplay.next_route].x,
-                                level.visual.openRoutes[level.gameplay.next_route].y,
-                                level.gameplay.destinations[level.gameplay.selected_route].route
-                            ).setOrigin(0).setDepth(2),
-                            occupied: true
-                        }
-                        level.gameplay.next_route++
-                        level.visual.closedRoutes[level.gameplay.next_route].setVisible(false)
-                        let dest = level.gameplay.destinations[selected]
-                        dest.uses--
-                        LEVEL.updateDestDisplay(dest)
-                        level.gameplay.selected_route = null
-                        level.visual.dest_outline.setVisible(false)
-                    }
-                }
+                this.checkAndAddRoute(level, curr)
             })
         }
     },
@@ -193,6 +186,46 @@ export const LEVEL = {
         goUnusable.on(CST.MOUSE.LEAVE, () => {
             goButton.setVisible(false)
         })
+    },
+
+    updateGMapsUrl(level) {
+        let map_place = level.visual.map_place
+        let map_directions = level.visual.map_directions
+
+        let waypoints = this.generateGMapsWaypoints(level.gameplay)
+        let base = 'https://www.google.com/maps/embed/v1/'
+        let mode = (waypoints.length < 2 ? 'place' : 'directions')
+        let api = '?key=' + CONFIG.API_KEY
+        if (waypoints.length < 2) {
+            let params = '&q=' + waypoints[0]
+            let url = base + mode + api + params
+            if (map_place.src !== url) {
+                map_place.src = url
+            }
+            map_directions.style.display = 'none'
+            map_place.style.display = 'block'
+        } else {
+            let pref = '&mode=driving&units=metric'
+            let orig = '&origin=' + waypoints[0]
+            let dest = '&destination=' + waypoints[waypoints.length-1]
+            let params = pref + orig + dest
+            if (waypoints.length > 2) {
+                let wayp = '&waypoints=' + waypoints.slice(1, waypoints.length-1).join('|')
+                params += wayp
+            }
+            let url = base + mode + api + params
+            if (map_directions.src !== url) {
+                map_directions.src = url
+            }
+            map_place.style.display = 'none'
+            map_directions.style.display = 'block'
+        }
+    },
+
+    generateGMapsWaypoints(level_data) {
+        return level_data.routes.map(
+            x => level_data.destinations[x.name].map_url
+        )
     },
 
 }

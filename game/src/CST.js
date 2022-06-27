@@ -71,5 +71,5 @@ export const CST = {
         CLICK: 'pointerdown',
         HOVER: 'pointerover',
         LEAVE: 'pointerout'
-    }
+    },
 }
