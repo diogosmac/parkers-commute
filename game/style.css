@@ -19,3 +19,14 @@ canvas {
 #gm-directions {
     z-index: 2;
 }
+
+#overlay {
+    z-index: 3;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 800px;
+    height: 600px;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+}

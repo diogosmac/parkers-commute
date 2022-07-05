@@ -35,12 +35,6 @@ export class MenuScene extends Phaser.Scene {
             CST.TITLE.MINI
         ).setScale(0.75).setVisible(false)
 
-        // create audio, disable pauseonblur
-        // this.sound.pauseOnBlur = false
-        // this.sound.play('title_music', {
-        //     loop: true
-        // })
-
         // make image buttons interactive
 
         // /*

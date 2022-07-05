@@ -53,12 +53,15 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.LEVEL.GO.USABLE, './assets/level/go_button.png')
         this.load.image(CST.LEVEL.GO.UNUSABLE, './assets/level/go_unusable.png')
 
+        // // // loading gray overlay
+        this.load.image(CST.LEVEL.LOAD, './assets/level/loading_overlay.png')
+
         /*
             Create a loading bar
             Loader events:
                 complete - when done loading everything
                 progress - loader number progress in decimal
-        */
+        */         
 
     }
     create() {

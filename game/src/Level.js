@@ -186,10 +186,19 @@ export const LEVEL = {
 
         goButton.on(CST.MOUSE.CLICK, () => {
             let apiUrl = this.getDirectionsUrl(level)
-            console.log(apiUrl)
+            level.scene.launch(CST.SCENES.DEFER, {
+                scene: level,
+                url: apiUrl
+            })
         })
 
         return goButton
+    },
+
+    processApiCall(level) {
+        let response = level.return
+        level.return = undefined
+        console.log('api response:', response)
     },
 
     getDirectionsUrl(level) {

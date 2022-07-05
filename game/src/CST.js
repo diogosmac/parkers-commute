@@ -1,8 +1,9 @@
 export const CST = {
     SCENES: {
-        LOAD: "LOAD",
-        MENU: "MENU",
-        LEVEL: "LEVEL",
+        LOAD: 'LOAD',
+        MENU: 'MENU',
+        LEVEL: 'LEVEL',
+        DEFER: 'DEFER',
     },
     STYLES: {
         BATTERY_PERCENTAGE: {
@@ -49,7 +50,8 @@ export const CST = {
         GO: {
             UNUSABLE: 'level_go_unusable',
             USABLE: 'level_go_button'
-        }
+        },
+        LOAD: 'level_load_overlay',
     },
     ICONS: {
         TEMPERATURE: 'level_temperature',
