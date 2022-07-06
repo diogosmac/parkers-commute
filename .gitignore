@@ -2,3 +2,5 @@ game/.cache
 game/src/config.js
 game/dist/*
 !game/dist/assets
+server/node_modules
+server/.env

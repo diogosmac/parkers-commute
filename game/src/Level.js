@@ -204,12 +204,11 @@ export const LEVEL = {
     getDirectionsUrl(level) {
         let waypoints = this.generateGMapsWaypoints(level.gameplay)
         if (waypoints.length < 2) return
-        let base = 'https://maps.googleapis.com/maps/api/directions/json'
-        let api = '?key=' + CONFIG.API_KEY
-        let pref = '&mode=driving&units=metric'
+        let base = CONFIG.API_URL
+        let pref = '?mode=driving&units=metric'
         let orig = '&origin=' + waypoints[0]
         let dest = '&destination=' + waypoints[waypoints.length-1]
-        let url = base + api + pref + orig + dest
+        let url = base + pref + orig + dest
         if (waypoints.length > 2) {
             let wayp = '&waypoints=' + waypoints.slice(1, waypoints.length-1).join('|')
             url += wayp

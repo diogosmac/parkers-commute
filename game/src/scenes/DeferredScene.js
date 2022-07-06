@@ -18,12 +18,7 @@ export class DeferredScene extends Phaser.Scene {
         setTimeout(() => {
             overlay.style.display = 'none'
         }, 2000)
-        fetch(this.url, { 
-            mode: 'cors',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-            }
-        })
+        fetch(this.url)
             .then(response => {
                 console.log('response:', response)
                 return response.json()
