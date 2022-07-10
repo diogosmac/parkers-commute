@@ -36,11 +36,12 @@ For more information regarding the organization of this Thesis, you can visit th
 
 ---
 
-## How to Run
+## How to Run Locally
 
 To run, you need an application bundler to wrap everything together. In my case, I used **Parcel**, which is available on **Node.js**.
 1. You need to have `node.js` installed on your computer.
 2. Open your terminal, and run `npm install -g parcel-bundler` to install the bundler.
-3. Run the program by running `parcel index.html` on the terminal, from the `game` directory. You can specify the port by adding `-p <port-number>` to the command. The default port is `1234`.
+3. You need to run the script at `server/index.js`, in order to have access to the proxy server that allows making calls to APIs with stricter CORS policies. I personally do this by running `node server/index.js &`, to run the server in "dettached" mode, but you can run it on a separate window if you prefer to see the output by itself.
+4. Run the program by running `parcel index.html` on the terminal, from the `game` directory. You can specify the port by adding `-p <port-number>` to the command. The default port is `1234`.
 
 The game will then be available at `localhost:<port-number>`!

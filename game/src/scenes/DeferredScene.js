@@ -15,19 +15,16 @@ export class DeferredScene extends Phaser.Scene {
     create() {
         const overlay = document.getElementById('overlay')
         overlay.style.display = 'block'
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             overlay.style.display = 'none'
-        }, 2000)
+        }, 3000)
         fetch(this.url)
-            .then(response => {
-                console.log('response:', response)
-                return response.json()
-            })
+            .then(response => response.json())
             .then((data) => {
-                console.log('data:', data)
                 this.level.return = data
-                overlay.style.display = 'none'
                 LEVEL.processApiCall(this.level)
+                overlay.style.display = 'none'
             })
+        clearTimeout(timeout)
     }
 }

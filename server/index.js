@@ -40,6 +40,7 @@ http.createServer(function (req, res) {
                 res.write(JSON.stringify(error))
                 res.end()
                 console.log('Response: ERROR')
+                console.log(error)
             })
     } else {
         console.log('Response: UNKNOWN REQUEST')

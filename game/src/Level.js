@@ -196,15 +196,33 @@ export const LEVEL = {
     },
 
     processApiCall(level) {
-        let response = level.return
+        const response = level.return
+        if (response.status !== 'OK') {
+            level.return = undefined
+            return
+        }
+
+        const route = response.routes[0]
+        const label = 'Route Legs'
+        console.groupCollapsed(label)
+        for (const [i, s] of route.legs.entries()) {
+            const sublabel = `Leg ${i+1}`
+            console.group(sublabel)
+            const distance_km = s.distance.value / 1000
+            const duration_min = s.duration.value / 60
+            console.log('Minutes:', duration_min)
+            console.log('Kilometers:', distance_km)
+            console.groupEnd(sublabel)
+        }
+        console.groupEnd(label)
+
         level.return = undefined
-        console.log('api response:', response)
     },
 
     getDirectionsUrl(level) {
         let waypoints = this.generateGMapsWaypoints(level.gameplay)
         if (waypoints.length < 2) return
-        let base = CONFIG.API_URL
+        let base = 'http://' + CONFIG.API_URL + '/get_directions'
         let pref = '?mode=driving&units=metric'
         let orig = '&origin=' + waypoints[0]
         let dest = '&destination=' + waypoints[waypoints.length-1]
