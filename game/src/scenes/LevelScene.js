@@ -14,8 +14,8 @@ export class LevelScene extends Phaser.Scene {
 
         // flavor data for the level
         this.level_data = {
-            weather: CST.WEATHER.SUNNY,
-            temperature: '20',
+            weather: CST.WEATHER.REGULAR.ICON,
+            temperature: CST.WEATHER.REGULAR.TEMP,
             humidity: '77',
             max_battery: '40',
             max_battery_dec: 0.4,

@@ -23,11 +23,6 @@ export const CST = {
             fill: '#fff',
         }
     },
-    WEATHER: {
-        SUNNY: 'level_weather_sunny',
-        CLOUDY: 'level_weather_cloudy',
-        RAINY: 'level_weather_rainy',
-    },
     DEST: {
         HOME: 'level_dest_home',
         HOME_OUT: 'level_dest_home_out',
@@ -73,5 +68,41 @@ export const CST = {
         CLICK: 'pointerdown',
         HOVER: 'pointerover',
         LEAVE: 'pointerout'
+    },
+    WEATHER: {
+        REGULAR: {
+            ICON: 'weather_regular',
+            PRECIPITATION: 35,
+            TEMP: 20,
+        },
+        CHILL: {
+            ICON: 'weather_chill',
+            PRECIPITATION: 70,
+            TEMP: 9,
+        },
+        COLD: {
+            ICON: 'weather_cold',
+            PRECIPITATION: 85,
+            TEMP: -6,
+        },
+        HOT: {
+            ICON: 'weather_hot',
+            PRECIPITATION: 0,
+            TEMP: 35,
+        },
+        WARM: {
+            ICON: 'weather_warm',
+            PRECIPITATION: 10,
+            TEMP: 29,
+        },
+    },
+    CALC: {
+        BASE: 376.59,
+        FACTOR: {
+            CHILL: 0.88,
+            COLD: 0.60,
+            HOT: 0.83,
+            WARM: 0.96,
+        },
     },
 }

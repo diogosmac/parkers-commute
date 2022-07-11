@@ -23,10 +23,15 @@ export class LoadScene extends Phaser.Scene {
 
         // // for levels
         this.load.image(CST.LEVEL.BACKGROUND, './assets/level/bg.png')
-        this.load.image(CST.WEATHER.SUNNY, './assets/level/status_icons/weather/sunny.png')
         this.load.image(CST.ICONS.TEMPERATURE, './assets/level/status_icons/temperature_icon.png')
         this.load.image(CST.ICONS.HUMIDITY, './assets/level/status_icons/humidity_icon.png')
         this.load.image(CST.ICONS.BATTERY, './assets/level/status_icons/battery_icon.png')
+        // // // weather icons
+        this.load.image(CST.WEATHER.REGULAR.ICON, './assets/level/status_icons/weather/regular.png')
+        this.load.image(CST.WEATHER.CHILL.ICON, './assets/level/status_icons/weather/rain.png')
+        this.load.image(CST.WEATHER.COLD.ICON, './assets/level/status_icons/weather/snow.png')
+        this.load.image(CST.WEATHER.HOT.ICON, './assets/level/status_icons/weather/sunny.png')
+        this.load.image(CST.WEATHER.WARM.ICON, './assets/level/status_icons/weather/warm.png')
 
         // // // destinations
         this.load.image(CST.DEST.SELECTED, './assets/level/dest/selected.png')
