@@ -1,3 +1,6 @@
-[submodule "phaser"]
-	path = phaser
-	url = ./phaser
+[submodule "game/lib"]
+	path = game/lib
+	url = git@github.com:photonstorm/phaser.git
+[submodule "game/docs"]
+	path = game/docs
+	url = git@github.com:photonstorm/phaser3-docs.git
