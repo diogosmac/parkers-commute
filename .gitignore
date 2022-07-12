@@ -1,4 +1,5 @@
 game/.cache
+game/.parcel-cache
 game/src/config.js
 game/dist/*
 !game/dist/assets
