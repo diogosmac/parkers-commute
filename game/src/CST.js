@@ -2,7 +2,8 @@ export const CST = {
     SCENES: {
         LOAD: 'LOAD',
         MENU: 'MENU',
-        LEVEL: 'LEVEL',
+        LEVEL_ONE: 'LEVEL1',
+        LEVEL_TWO: 'LEVEL2',
         DEFER: 'DEFER',
     },
     STYLES: {
@@ -28,6 +29,8 @@ export const CST = {
         HOME_OUT: 'level_dest_home_out',
         WORK: 'level_dest_work',
         WORK_OUT: 'level_dest_work_out',
+        SUPERMARKET: 'level_dest_supermarket',
+        SUPERMARKET_OUT: 'level_dest_supermarket_out',
         SELECTED: 'level_dest_selected',
     },
     LEVEL: {
@@ -41,6 +44,7 @@ export const CST = {
             CLOSED: 'level_route_closed',
             HOME: 'level_route_home',
             WORK: 'level_route_work',
+            SUPERMARKET: 'level_route_supermarket',
         },
         GO: {
             UNUSABLE: 'level_go_unusable',

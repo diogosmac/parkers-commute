@@ -55,7 +55,7 @@ export class MenuScene extends Phaser.Scene {
             hoverSprite.setVisible(false)
         })
         playButton.on(CST.MOUSE.CLICK_RELEASE, () => {
-            this.scene.start(CST.SCENES.LEVEL)
+            this.scene.start(CST.SCENES.LEVEL_TWO)
         })
 
         optionsButton.setInteractive()

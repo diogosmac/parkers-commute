@@ -2,10 +2,10 @@ import { CONFIG } from '../config'
 import { CST } from '../CST'
 import { LEVEL } from '../Level'
 
-export class LevelScene extends Phaser.Scene {
+export class LevelOneScene extends Phaser.Scene {
     constructor() {
         super({
-            key: CST.SCENES.LEVEL
+            key: CST.SCENES.LEVEL_ONE
         })
     }
     init(data) {

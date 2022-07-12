@@ -39,12 +39,15 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.DEST.HOME_OUT, './assets/level/dest/home_out.png')
         this.load.image(CST.DEST.WORK, './assets/level/dest/work.png')
         this.load.image(CST.DEST.WORK_OUT, './assets/level/dest/work_out.png')
+        this.load.image(CST.DEST.SUPERMARKET, './assets/level/dest/supermarket.png')
+        this.load.image(CST.DEST.SUPERMARKET_OUT, './assets/level/dest/supermarket_out.png')
 
         // // // routes
         this.load.image(CST.LEVEL.ROUTE.OPEN, './assets/level/routes/open.png')
         this.load.image(CST.LEVEL.ROUTE.CLOSED, './assets/level/routes/closed.png')
         this.load.image(CST.LEVEL.ROUTE.HOME, './assets/level/routes/home.png')
         this.load.image(CST.LEVEL.ROUTE.WORK, './assets/level/routes/work.png')
+        this.load.image(CST.LEVEL.ROUTE.SUPERMARKET, './assets/level/routes/supermarket.png')
 
         // // // battery bar
         this.load.image(CST.LEVEL.BATTERY.FULL, './assets/level/battery_full_bar.png')

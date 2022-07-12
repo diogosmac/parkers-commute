@@ -202,6 +202,7 @@ export const LEVEL = {
             return
         }
 
+        console.log(response)
         const route = response.routes[0]
         const label = 'Route Legs'
         console.groupCollapsed(label)

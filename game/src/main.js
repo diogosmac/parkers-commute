@@ -1,5 +1,6 @@
 import { DeferredScene } from './scenes/DeferredScene';
-import { LevelScene } from './scenes/LevelScene';
+import { LevelOneScene } from './scenes/LevelScene_1';
+import { LevelTwoScene } from './scenes/LevelScene_2';
 import { LoadScene } from './scenes/LoadScene'
 import { MenuScene } from './scenes/MenuScene'
 
@@ -9,7 +10,8 @@ let game = new Phaser.Game({
     scene: [
         LoadScene,
         MenuScene,
-        LevelScene,
+        LevelOneScene,
+        LevelTwoScene,
         DeferredScene,
     ]
 });
