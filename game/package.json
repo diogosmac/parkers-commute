@@ -1,0 +1,13 @@
+{
+  "name": "parkerscommute",
+  "version": "1.0.0",
+  "devDependencies": {
+    "process": "0.11.10"
+  },
+  "dependencies": {
+    "parcel": "2.6.2"
+  },
+  "scripts": {
+    "start": "parcel index.html -p 1904"
+  }
+}
