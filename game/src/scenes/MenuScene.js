@@ -1,14 +1,11 @@
 import { CST } from '../CST'
+import { LEVELCONFIG } from '../LevelConfig'
 
 export class MenuScene extends Phaser.Scene {
     constructor() {
         super({
             key: CST.SCENES.MENU
         })
-    }
-    init(data) {
-        if (Object.keys(data).length > 0) console.info('The data from the loading scene was received')
-        else console.info('No data was received from the loading scene')
     }
     preload() {
 
@@ -25,7 +22,7 @@ export class MenuScene extends Phaser.Scene {
         let optionsButton = this.add.image(
             this.game.renderer.width / 2,
             this.game.renderer.height / 2 + 100,
-            CST.TITLE.OPTIONS
+            CST.TITLE.CREDITS
         ).setDepth(2)
 
         // create sprites (if using pixel art, remove sharpen)
@@ -55,7 +52,10 @@ export class MenuScene extends Phaser.Scene {
             hoverSprite.setVisible(false)
         })
         playButton.on(CST.MOUSE.CLICK_RELEASE, () => {
-            this.scene.start(CST.SCENES.LEVEL_TWO)
+            this.scene.start(
+                CST.SCENES.LEVEL,
+                LEVELCONFIG[LEVELCONFIG.NEXT++]
+            )
         })
 
         optionsButton.setInteractive()
@@ -68,7 +68,7 @@ export class MenuScene extends Phaser.Scene {
             hoverSprite.setVisible(false)
         })
         optionsButton.on(CST.MOUSE.CLICK_RELEASE, () => {
-            console.info('OPTIONS: button clicked')
+            this.scene.start(CST.SCENES.CREDITS)
         })
 
     }

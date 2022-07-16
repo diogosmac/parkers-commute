@@ -202,9 +202,8 @@ export const LEVEL = {
             return
         }
 
-        console.log(response)
         const route = response.routes[0]
-        const label = 'Route Legs'
+        const label = 'Route Legs: ' + response.status
         console.groupCollapsed(label)
         for (const [i, s] of route.legs.entries()) {
             const sublabel = `Leg ${i+1}`

@@ -18,8 +18,13 @@ export class LoadScene extends Phaser.Scene {
         // // for title screen
         this.load.image(CST.TITLE.BACKGROUND, './assets/title/bg.png')
         this.load.image(CST.TITLE.PLAY, './assets/title/button_play.png')
-        this.load.image(CST.TITLE.OPTIONS, './assets/title/button_options.png')
+        this.load.image(CST.TITLE.CREDITS, './assets/title/button_credits.png')
         this.load.image(CST.TITLE.MINI, './assets/title/mini.png')
+        // this.load.image(CST.TITLE.OPTIONS, './assets/title/button_options.png')
+
+        // // for credits screen
+        this.load.image(CST.CREDITS.TEXT, './assets/credits/credits.png')
+        this.load.image(CST.CREDITS.BUTTON, './assets/credits/exit_button.png')
 
         // // for levels
         this.load.image(CST.LEVEL.BACKGROUND, './assets/level/bg.png')
@@ -66,10 +71,12 @@ export class LoadScene extends Phaser.Scene {
             Loader events:
                 complete - when done loading everything
                 progress - loader number progress in decimal
-        */         
+        */
+
+        
 
     }
     create() {
-        this.scene.start(CST.SCENES.MENU, { string: 'Hello from the Load scene' })
+        this.scene.start(CST.SCENES.MENU)
     }
 }

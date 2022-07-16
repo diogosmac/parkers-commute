@@ -2,9 +2,9 @@ export const CST = {
     SCENES: {
         LOAD: 'LOAD',
         MENU: 'MENU',
-        LEVEL_ONE: 'LEVEL1',
-        LEVEL_TWO: 'LEVEL2',
+        LEVEL: 'LEVEL',
         DEFER: 'DEFER',
+        CREDITS: 'CREDITS',
     },
     STYLES: {
         BATTERY_PERCENTAGE: {
@@ -65,7 +65,12 @@ export const CST = {
         BACKGROUND: 'title_bg',
         PLAY: 'title_play_button',
         OPTIONS: 'title_options_button',
+        CREDITS: 'title_credits_button',
         MINI: 'title_mini'
+    },
+    CREDITS: {
+        TEXT: 'credits_text',
+        BUTTON: 'credits_button',
     },
     MOUSE: {
         CLICK_RELEASE: 'pointerup',
