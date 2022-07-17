@@ -1,5 +1,11 @@
 import { CONFIG } from './config'
 import { CST } from './CST'
+import { LEVELCONFIG } from './LevelConfig'
+
+export const REQUESTS = {
+    INIT: 'REQUEST_INIT',
+    CHECK: 'REQUEST_CHECK'
+}
 
 export const LEVEL = {
     /**
@@ -17,17 +23,17 @@ export const LEVEL = {
         level.add.image(0, 0, CST.LEVEL.BACKGROUND).setOrigin(0).setDepth(0)
 
         // // set weather on top left
-        level.add.image(53, 24, level.level_data.weather).setOrigin(0).setDepth(1)
+        level.add.image(53, 24, level.DATA.weather).setOrigin(0).setDepth(1)
         // // // set temperature and icon
-        level.add.text(153.5, 41.5, level.level_data.temperature + 'ºC', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
+        level.add.text(153.5, 41.5, level.DATA.temperature + 'ºC', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
         level.add.image(177, 29, CST.ICONS.TEMPERATURE).setOrigin(0).setDepth(1)
         // // // set humidity and icon
-        level.add.text(153.5, 76.5, level.level_data.humidity + '%', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
+        level.add.text(153.5, 76.5, level.DATA.humidity + '%', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
         level.add.image(177, 64, CST.ICONS.HUMIDITY).setOrigin(0).setDepth(1)
 
         // // set max battery for level on top right
         level.add.image(695.55, 28, CST.ICONS.BATTERY).setOrigin(0).setDepth(1)
-        level.add.text(661.78, 64, level.level_data.max_battery + '%', CST.STYLES.FLAVOR_LARGE).setOrigin(0.5)
+        level.add.text(661.78, 64, level.DATA.max_battery + '%', CST.STYLES.FLAVOR_LARGE).setOrigin(0.5)
 
         // // place map and power-up bar placeholders
         level.add.image(53, 136, CST.PLACEHOLDER.MAP).setOrigin(0).setDepth(1)
@@ -43,7 +49,7 @@ export const LEVEL = {
 
     // place possible destinations on top of screen
     placeDestinationSquare(level, i) {
-        let dest = level.gameplay.destinations[i]
+        let dest = level.GAMEPLAY.destinations[i]
         dest.icon = level.add.image(
             dest.screen_position.x,
             dest.screen_position.y,
@@ -56,11 +62,11 @@ export const LEVEL = {
         ).setOrigin(0).setDepth(1).setVisible(false)
         dest.icon.setInteractive()
         dest.icon.on(CST.MOUSE.CLICK_RELEASE, () => {
-            if (i === level.gameplay.selected_route) {
-                level.gameplay.selected_route = null
+            if (i === level.GAMEPLAY.selected_route) {
+                level.GAMEPLAY.selected_route = null
                 level.visual.dest_outline.setVisible(false)
             } else if (dest.uses > 0) {
-                level.gameplay.selected_route = i
+                level.GAMEPLAY.selected_route = i
                 level.visual.dest_outline.x = dest.screen_position.x
                 level.visual.dest_outline.setVisible(true)
             }
@@ -91,8 +97,8 @@ export const LEVEL = {
                 )
             }
         } else {
-            let icon = level.add.image(x, y, level.gameplay.routes[0].icon).setOrigin(0).setDepth(1)
-            level.gameplay.routes[0].icon = icon
+            let icon = level.add.image(x, y, level.GAMEPLAY.routes[0].icon).setOrigin(0).setDepth(1)
+            level.GAMEPLAY.routes[0].icon = icon
         }
     },
 
@@ -104,56 +110,56 @@ export const LEVEL = {
          */
         let full = level.add.image(53, 528, CST.LEVEL.BATTERY.FULL).setOrigin(0).setDepth(1)
         let usable = level.add.image(53, 528, CST.LEVEL.BATTERY.USABLE).setOrigin(0).setDepth(2)
-        usable.frame.cutWidth = full.frame.width * level.level_data.max_battery_dec
+        usable.frame.cutWidth = full.frame.width * level.DATA.max_battery_dec
         usable.frame.updateUVs();
-        level.add.text(542.64, 546.5, level.gameplay.current_battery, CST.STYLES.BATTERY_PERCENTAGE).setOrigin(0.5).setDepth(3)
+        level.add.text(542.64, 546.5, level.GAMEPLAY.current_battery, CST.STYLES.BATTERY_PERCENTAGE).setOrigin(0.5).setDepth(3)
     },
 
     checkAndRemoveRoute(level, curr) {
         let next = curr + 1
         if (
-            level.gameplay.routes[curr] !== undefined &&
-            level.gameplay.routes[next] === undefined
+            level.GAMEPLAY.routes[curr] !== undefined &&
+            level.GAMEPLAY.routes[next] === undefined
         ) {
-            let route = level.gameplay.routes[curr]
-            let dest = level.gameplay.destinations[route.name]
+            let route = level.GAMEPLAY.routes[curr]
+            let dest = level.GAMEPLAY.destinations[route.name]
             route.icon.destroy()
             dest.uses++
             LEVEL.updateDestDisplay(dest)
-            level.gameplay.routes.pop(curr)
-            level.visual.closedRoutes[level.gameplay.next_route--].setVisible(true)
+            level.GAMEPLAY.routes.pop(curr)
+            level.visual.closedRoutes[level.GAMEPLAY.next_route--].setVisible(true)
             this.updateGMapsUrl(level)
-            if (level.gameplay.next_route == 1) {
+            if (level.GAMEPLAY.next_route == 1) {
                 level.visual.goButton.setVisible(false)
             }
         }
     },
 
     checkAndAddRoute(level, curr) {
-        if (level.gameplay.selected_route !== null) {
-            if (level.gameplay.routes[curr] !== undefined) {
+        if (level.GAMEPLAY.selected_route !== null) {
+            if (level.GAMEPLAY.routes[curr] !== undefined) {
                 return
             }
-            let selected = level.gameplay.selected_route
-            let last = level.gameplay.routes[level.gameplay.next_route - 1]
+            let selected = level.GAMEPLAY.selected_route
+            let last = level.GAMEPLAY.routes[level.GAMEPLAY.next_route - 1]
             if (selected !== last.name) {
-                level.gameplay.routes[level.gameplay.next_route] = {
+                level.GAMEPLAY.routes[level.GAMEPLAY.next_route] = {
                     name: selected,
                     icon: level.add.image(
-                        level.visual.openRoutes[level.gameplay.next_route].x,
-                        level.visual.openRoutes[level.gameplay.next_route].y,
-                        level.gameplay.destinations[level.gameplay.selected_route].route
+                        level.visual.openRoutes[level.GAMEPLAY.next_route].x,
+                        level.visual.openRoutes[level.GAMEPLAY.next_route].y,
+                        level.GAMEPLAY.destinations[level.GAMEPLAY.selected_route].route
                     ).setOrigin(0).setDepth(2),
                     occupied: true
                 }
-                level.visual.closedRoutes[++level.gameplay.next_route].setVisible(false)
-                let dest = level.gameplay.destinations[selected]
+                level.visual.closedRoutes[++level.GAMEPLAY.next_route].setVisible(false)
+                let dest = level.GAMEPLAY.destinations[selected]
                 dest.uses--
                 LEVEL.updateDestDisplay(dest)
-                level.gameplay.selected_route = null
+                level.GAMEPLAY.selected_route = null
                 level.visual.dest_outline.setVisible(false)
                 this.updateGMapsUrl(level)
-                if (level.gameplay.next_route > 1) {
+                if (level.GAMEPLAY.next_route > 1) {
                     level.visual.goButton.setVisible(true)
                 }
             }
@@ -187,7 +193,8 @@ export const LEVEL = {
         goButton.on(CST.MOUSE.CLICK, () => {
             let apiUrl = this.getDirectionsUrl(level)
             level.scene.launch(CST.SCENES.DEFER, {
-                scene: level,
+                type: REQUESTS.CHECK,
+                data: level,
                 url: apiUrl
             })
         })
@@ -195,33 +202,62 @@ export const LEVEL = {
         return goButton
     },
 
-    processApiCall(level) {
+    processInitCall(level) {
         const response = level.return
         if (response.status !== 'OK') {
             level.return = undefined
+            delete level.return
             return
         }
 
         const route = response.routes[0]
-        const label = 'Route Legs: ' + response.status
-        console.groupCollapsed(label)
-        for (const [i, s] of route.legs.entries()) {
-            const sublabel = `Leg ${i+1}`
-            console.group(sublabel)
-            const distance_km = s.distance.value / 1000
-            const duration_min = s.duration.value / 60
-            console.log('Minutes:', duration_min)
-            console.log('Kilometers:', distance_km)
-            console.groupEnd(sublabel)
+        let distance = 0
+        for (const s of route.legs) {
+            distance += s.distance.value
         }
-        console.groupEnd(label)
+        level.MAX_AUTONOMY = distance
 
         level.return = undefined
+        delete level.return
+    },
+
+    processCheckCall(level) {
+        const response = level.return
+        if (response.status !== 'OK') {
+            level.return = undefined
+            delete level.return
+            return
+        }
+
+        const route = response.routes[0]
+        let distance = 0
+        for (const [i, s] of route.legs.entries()) {
+            distance += s.distance.value
+        }
+        if (distance >= level.GAMEPLAY.MAX_AUTONOMY) {
+            // if (LEVELCONFIG.NEXT in LEVELCONFIG.LEVELS) {
+            if (LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)) {
+                level.scene.start(
+                    CST.SCENES.LEVEL,
+                    LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++]
+                )
+            } else {
+                LEVELCONFIG.NEXT = 1
+                level.scene.start(CST.SCENES.LOAD)
+            }
+        }
+
+        level.return = undefined
+        delete level.return
     },
 
     getDirectionsUrl(level) {
-        let waypoints = this.generateGMapsWaypoints(level.gameplay)
+        let waypoints = this.generateGMapsWaypoints(level.GAMEPLAY)
         if (waypoints.length < 2) return
+        return this.makeUrlFromWaypoints(waypoints)
+    },
+
+    makeUrlFromWaypoints(waypoints) {
         let base = 'http://' + CONFIG.API_URL + '/get_directions'
         let pref = '?mode=driving&units=metric'
         let orig = '&origin=' + waypoints[0]
@@ -238,7 +274,7 @@ export const LEVEL = {
         let map_place = level.visual.map_place
         let map_directions = level.visual.map_directions
 
-        let waypoints = this.generateGMapsWaypoints(level.gameplay)
+        let waypoints = this.generateGMapsWaypoints(level.GAMEPLAY)
         let base = 'https://www.google.com/maps/embed/v1/'
         let mode = (waypoints.length < 2 ? 'place' : 'directions')
         let api = '?key=' + CONFIG.API_KEY
@@ -268,9 +304,9 @@ export const LEVEL = {
         }
     },
 
-    generateGMapsWaypoints(level_data) {
-        return level_data.routes.map(
-            x => level_data.destinations[x.name].map_url
+    generateGMapsWaypoints(data) {
+        return data.routes.map(
+            x => data.destinations[x.name].map_url
         )
     },
 

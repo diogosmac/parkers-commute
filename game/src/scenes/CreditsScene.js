@@ -1,5 +1,4 @@
 import { CST } from '../CST'
-import { LEVELCONFIG } from '../LevelConfig'
 
 export class CreditsScene extends Phaser.Scene {
     constructor() {

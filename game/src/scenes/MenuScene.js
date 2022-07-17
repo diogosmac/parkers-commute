@@ -8,7 +8,10 @@ export class MenuScene extends Phaser.Scene {
         })
     }
     preload() {
-
+        const map_place = document.getElementById('gm-place')
+        map_place.style.display = 'none'
+        const map_directions = document.getElementById('gm-directions')
+        map_directions.style.display = 'none'
     }
     create() {      // creating the menu screen
 
@@ -54,7 +57,7 @@ export class MenuScene extends Phaser.Scene {
         playButton.on(CST.MOUSE.CLICK_RELEASE, () => {
             this.scene.start(
                 CST.SCENES.LEVEL,
-                LEVELCONFIG[LEVELCONFIG.NEXT++]
+                LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++]
             )
         })
 

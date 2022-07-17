@@ -1,30 +1,47 @@
 import { CST } from '../CST'
-import { LEVEL } from '../Level'
+import { LEVEL, REQUESTS } from '../Level'
 
 export class DeferredScene extends Phaser.Scene {
     constructor() {
-        super({key: CST.SCENES.DEFER})
+        super({ key: CST.SCENES.DEFER })
     }
     init(data) {
-        this.level = data.scene
+        this.type = data.type
+        this.data = data.data
         this.url = data.url
     }
     preload() {
 
     }
     create() {
-        const overlay = document.getElementById('overlay')
-        overlay.style.display = 'block'
-        const timeout = setTimeout(() => {
-            overlay.style.display = 'none'
-        }, 3000)
-        fetch(this.url)
-            .then(response => response.json())
-            .then((data) => {
-                this.level.return = data
-                LEVEL.processApiCall(this.level)
-                overlay.style.display = 'none'
-            })
-        clearTimeout(timeout)
+        switch (this.type) {
+            case REQUESTS.INIT:
+                for (const [i, v] of Object.entries(this.url)) {
+                    fetch(v)
+                        .then(response => response.json())
+                        .then((data) => {
+                            this.data[i].return = data
+                            LEVEL.processInitCall(this.data[i])
+                        })
+                }
+                break
+            case REQUESTS.CHECK:
+                const overlay = document.getElementById('overlay')
+                overlay.style.display = 'block'
+                const timeout = setTimeout(() => {
+                    overlay.style.display = 'none'
+                }, 3000)
+                fetch(this.url)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.data.return = data
+                        LEVEL.processCheckCall(this.data)
+                        overlay.style.display = 'none'
+                    })
+                clearTimeout(timeout)
+                break
+            default:
+                console.log('Request type was not defined')
+        }
     }
 }

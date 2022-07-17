@@ -12,8 +12,9 @@ export class LevelScene extends Phaser.Scene {
             console.error('No data was received from the loading scene')
         }
 
-        this.level_data = data.DATA
-        this.gameplay = data.GAMEPLAY
+        this.DATA = data.DATA
+        this.GAMEPLAY = data.GAMEPLAY
+        this.GAMEPLAY.MAX_AUTONOMY = data.MAX_AUTONOMY
     }
     preload() {
         // constant between levels - will be in general "generateLevel" function
@@ -37,7 +38,7 @@ export class LevelScene extends Phaser.Scene {
         this.input.mouse.disableContextMenu()
         LEVEL.setupInterface(this)
 
-        for (let i in this.gameplay.destinations) {
+        for (let i in this.GAMEPLAY.destinations) {
             LEVEL.placeDestinationSquare(this, i)
         }
 

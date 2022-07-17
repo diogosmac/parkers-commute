@@ -1,4 +1,6 @@
 import { CST } from '../CST'
+import { LEVEL, REQUESTS } from '../Level'
+import { LEVELCONFIG } from '../LevelConfig'
 
 export class LoadScene extends Phaser.Scene {
     constructor() {
@@ -73,7 +75,20 @@ export class LoadScene extends Phaser.Scene {
                 progress - loader number progress in decimal
         */
 
-        
+        const urls = {}
+        for (const [i, level] of Object.entries(LEVELCONFIG.LEVELS)) {
+            const waypoints = level.DESIRED_ROUTE.map(
+                x => level.GAMEPLAY.destinations[x].map_url
+            )
+            if (waypoints.length < 2) return
+            const url = LEVEL.makeUrlFromWaypoints(waypoints)
+            urls[i] = url
+        }
+        this.scene.launch(CST.SCENES.DEFER, {
+            type: REQUESTS.INIT,
+            data: LEVELCONFIG.LEVELS,
+            url: urls,
+        })
 
     }
     create() {
