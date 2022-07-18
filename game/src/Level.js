@@ -216,6 +216,8 @@ export const LEVEL = {
             distance += s.distance.value
         }
         level.MAX_AUTONOMY = distance
+        level.DATA.max_battery_dec = (distance / 1000) / CST.CALC.BASE
+        level.DATA.max_battery = Math.round(level.DATA.max_battery_dec * 100)
 
         level.return = undefined
         delete level.return
