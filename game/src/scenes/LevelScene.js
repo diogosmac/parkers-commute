@@ -38,6 +38,8 @@ export class LevelScene extends Phaser.Scene {
         this.input.mouse.disableContextMenu()
         LEVEL.setupInterface(this)
 
+        LEVEL.placePowerUps(this)
+
         for (let i in this.GAMEPLAY.destinations) {
             LEVEL.placeDestinationSquare(this, i)
         }

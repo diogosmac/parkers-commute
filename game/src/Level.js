@@ -38,7 +38,6 @@ export const LEVEL = {
 
         // // place map and power-up bar placeholders
         level.add.image(53, 136, CST.PLACEHOLDER.MAP).setOrigin(0).setDepth(1)
-        level.add.image(688, 136, CST.PLACEHOLDER.POWERUPS).setOrigin(0).setDepth(1)
 
         // // add destination selection outline image
         level.visual.dest_outline = level.add.image(
@@ -84,6 +83,14 @@ export const LEVEL = {
         dest.icon.setVisible(dest.uses > 0)
         dest.icon_out.setVisible(dest.uses === 0)
         dest.text.setText(dest.uses)
+    },
+
+    placePowerUps(level) {
+        if (level.GAMEPLAY.hasOwnProperty('powerups')) {
+            level.add.image(683, 136, CST.LEVEL.POWERUPS.BAR).setOrigin(0).setDepth(1)
+        } else {
+            level.add.image(683, 136, CST.PLACEHOLDER.POWERUPS).setOrigin(0).setDepth(1)
+        }
     },
 
     placeRouteBar(level) {

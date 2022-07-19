@@ -106,6 +106,7 @@ export const LEVELCONFIG = {
                         icon: CST.LEVEL.ROUTE.HOME,
                     },
                 ],
+                powerups: []
             },
             DESIRED_ROUTE: ['Home', 'Work', 'Home', 'Supermarket', 'Home']
         }

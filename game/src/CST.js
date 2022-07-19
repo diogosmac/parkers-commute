@@ -54,6 +54,9 @@ export const CST = {
             USABLE: 'level_go_button'
         },
         LOAD: 'level_load_overlay',
+        POWERUPS: {
+            BAR: 'level_powerups_bar',
+        }
     },
     ICONS: {
         TEMPERATURE: 'level_temperature',

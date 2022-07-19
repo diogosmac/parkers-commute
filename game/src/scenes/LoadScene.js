@@ -40,6 +40,9 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.WEATHER.HOT.ICON, 'level/status_icons/weather/sunny.png')
         this.load.image(CST.WEATHER.WARM.ICON, 'level/status_icons/weather/warm.png')
 
+        // // // powerups
+        this.load.image(CST.LEVEL.POWERUPS.BAR, 'level/powerups/bar.png')
+
         // // // destinations
         this.load.image(CST.DEST.SELECTED, 'level/dest/selected.png')
         this.load.image(CST.DEST.HOME, 'level/dest/home.png')
