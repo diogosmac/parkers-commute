@@ -1,5 +1,6 @@
 import { CST } from '../CST'
 import { LEVELCONFIG } from '../LevelConfig'
+import { UTILS } from '../Utils'
 
 export class MenuScene extends Phaser.Scene {
     constructor() {
@@ -57,7 +58,7 @@ export class MenuScene extends Phaser.Scene {
         playButton.on(CST.MOUSE.CLICK_RELEASE, () => {
             this.scene.start(
                 CST.SCENES.LEVEL,
-                LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++]
+                UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++])
             )
         })
 

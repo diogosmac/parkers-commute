@@ -1,3 +1,4 @@
+import { CONFIG } from '../config'
 import { CST } from '../CST'
 import { LEVEL, REQUESTS } from '../Level'
 import { LEVELCONFIG } from '../LevelConfig'
@@ -14,59 +15,61 @@ export class LoadScene extends Phaser.Scene {
     preload() {
 
         // load assets
+        this.load.setBaseURL(CONFIG.ASSETS_URL)
 
         // // for title screen
-        this.load.image(CST.TITLE.BACKGROUND, './assets/title/bg.png')
-        this.load.image(CST.TITLE.PLAY, './assets/title/button_play.png')
-        this.load.image(CST.TITLE.CREDITS, './assets/title/button_credits.png')
-        this.load.image(CST.TITLE.MINI, './assets/title/mini.png')
-        // this.load.image(CST.TITLE.OPTIONS, './assets/title/button_options.png')
+        this.load.image(CST.TITLE.BACKGROUND, 'title/bg.png')
+        this.load.image(CST.TITLE.PLAY, 'title/button_play.png')
+        this.load.image(CST.TITLE.CREDITS, 'title/button_credits.png')
+        this.load.image(CST.TITLE.MINI, 'title/mini.png')
+        // this.load.image(CST.TITLE.OPTIONS, 'title/button_options.png')
 
         // // for credits screen
-        this.load.image(CST.CREDITS.TEXT, './assets/credits/credits.png')
-        this.load.image(CST.CREDITS.BUTTON, './assets/credits/exit_button.png')
+        this.load.image(CST.CREDITS.TEXT, 'credits/credits.png')
+        this.load.image(CST.CREDITS.BUTTON, 'credits/exit_button.png')
 
         // // for levels
-        this.load.image(CST.LEVEL.BACKGROUND, './assets/level/bg.png')
-        this.load.image(CST.ICONS.TEMPERATURE, './assets/level/status_icons/temperature_icon.png')
-        this.load.image(CST.ICONS.HUMIDITY, './assets/level/status_icons/humidity_icon.png')
-        this.load.image(CST.ICONS.BATTERY, './assets/level/status_icons/battery_icon.png')
+        this.load.image(CST.LEVEL.BACKGROUND, 'level/bg.png')
+        this.load.image(CST.ICONS.TEMPERATURE, 'level/status_icons/temperature_icon.png')
+        this.load.image(CST.ICONS.HUMIDITY, 'level/status_icons/humidity_icon.png')
+        this.load.image(CST.ICONS.BATTERY, 'level/status_icons/battery_icon.png')
         // // // weather icons
-        this.load.image(CST.WEATHER.REGULAR.ICON, './assets/level/status_icons/weather/regular.png')
-        this.load.image(CST.WEATHER.CHILL.ICON, './assets/level/status_icons/weather/rain.png')
-        this.load.image(CST.WEATHER.COLD.ICON, './assets/level/status_icons/weather/snow.png')
-        this.load.image(CST.WEATHER.HOT.ICON, './assets/level/status_icons/weather/sunny.png')
-        this.load.image(CST.WEATHER.WARM.ICON, './assets/level/status_icons/weather/warm.png')
+        this.load.image(CST.WEATHER.REGULAR.ICON, 'level/status_icons/weather/regular.png')
+        this.load.image(CST.WEATHER.CHILL.ICON, 'level/status_icons/weather/rain.png')
+        this.load.image(CST.WEATHER.COLD.ICON, 'level/status_icons/weather/snow.png')
+        this.load.image(CST.WEATHER.HOT.ICON, 'level/status_icons/weather/sunny.png')
+        this.load.image(CST.WEATHER.WARM.ICON, 'level/status_icons/weather/warm.png')
 
         // // // destinations
-        this.load.image(CST.DEST.SELECTED, './assets/level/dest/selected.png')
-        this.load.image(CST.DEST.HOME, './assets/level/dest/home.png')
-        this.load.image(CST.DEST.HOME_OUT, './assets/level/dest/home_out.png')
-        this.load.image(CST.DEST.WORK, './assets/level/dest/work.png')
-        this.load.image(CST.DEST.WORK_OUT, './assets/level/dest/work_out.png')
-        this.load.image(CST.DEST.SUPERMARKET, './assets/level/dest/supermarket.png')
-        this.load.image(CST.DEST.SUPERMARKET_OUT, './assets/level/dest/supermarket_out.png')
+        this.load.image(CST.DEST.SELECTED, 'level/dest/selected.png')
+        this.load.image(CST.DEST.HOME, 'level/dest/home.png')
+        this.load.image(CST.DEST.HOME_OUT, 'level/dest/home_out.png')
+        this.load.image(CST.DEST.WORK, 'level/dest/work.png')
+        this.load.image(CST.DEST.WORK_OUT, 'level/dest/work_out.png')
+        this.load.image(CST.DEST.SUPERMARKET, 'level/dest/supermarket.png')
+        this.load.image(CST.DEST.SUPERMARKET_OUT, 'level/dest/supermarket_out.png')
 
         // // // routes
-        this.load.image(CST.LEVEL.ROUTE.OPEN, './assets/level/routes/open.png')
-        this.load.image(CST.LEVEL.ROUTE.CLOSED, './assets/level/routes/closed.png')
-        this.load.image(CST.LEVEL.ROUTE.BAR_EMPTY, './assets/level/routes/bar_empty.png')
-        this.load.image(CST.LEVEL.ROUTE.BAR_FULL, './assets/level/routes/bar_full.png')
-        this.load.image(CST.LEVEL.ROUTE.HOME, './assets/level/routes/home.png')
-        this.load.image(CST.LEVEL.ROUTE.WORK, './assets/level/routes/work.png')
-        this.load.image(CST.LEVEL.ROUTE.SUPERMARKET, './assets/level/routes/supermarket.png')
+        this.load.image(CST.LEVEL.ROUTE.OPEN, 'level/routes/open.png')
+        this.load.image(CST.LEVEL.ROUTE.CLOSED, 'level/routes/closed.png')
+        this.load.image(CST.LEVEL.ROUTE.BAR_EMPTY, 'level/routes/bar_empty.png')
+        this.load.image(CST.LEVEL.ROUTE.BAR_FULL, 'level/routes/bar_full.png')
+        this.load.image(CST.LEVEL.ROUTE.HOME, 'level/routes/home.png')
+        this.load.image(CST.LEVEL.ROUTE.WORK, 'level/routes/work.png')
+        this.load.image(CST.LEVEL.ROUTE.SUPERMARKET, 'level/routes/supermarket.png')
 
         // // // battery bar
-        this.load.image(CST.LEVEL.BATTERY.FULL, './assets/level/battery_full_bar.png')
-        this.load.image(CST.LEVEL.BATTERY.USABLE, './assets/level/battery_usable_bar.png')
+        this.load.image(CST.LEVEL.BATTERY.FULL, 'level/battery_full_bar.png')
+        this.load.image(CST.LEVEL.BATTERY.USABLE, 'level/battery_usable_bar.png')
+        this.load.image(CST.LEVEL.BATTERY.USED, 'level/battery_used_bar.png')
 
         // // // mockups
-        this.load.image(CST.PLACEHOLDER.MAP, './assets/level/mocks/map.png')
-        this.load.image(CST.PLACEHOLDER.POWERUPS, './assets/level/mocks/powerups.png')
+        this.load.image(CST.PLACEHOLDER.MAP, 'level/mocks/map.png')
+        this.load.image(CST.PLACEHOLDER.POWERUPS, 'level/mocks/powerups.png')
 
         // // // go button
-        this.load.image(CST.LEVEL.GO.USABLE, './assets/level/go_button.png')
-        this.load.image(CST.LEVEL.GO.UNUSABLE, './assets/level/go_unusable.png')
+        this.load.image(CST.LEVEL.GO.USABLE, 'level/go_button.png')
+        this.load.image(CST.LEVEL.GO.UNUSABLE, 'level/go_unusable.png')
 
         /*
             @@@ JUST IN CASE @@@

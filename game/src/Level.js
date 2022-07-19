@@ -1,6 +1,7 @@
 import { CONFIG } from './config'
 import { CST } from './CST'
 import { LEVELCONFIG } from './LevelConfig'
+import { UTILS } from './Utils'
 
 export const REQUESTS = {
     INIT: 'REQUEST_INIT',
@@ -92,22 +93,37 @@ export const LEVEL = {
          */
         const full = level.add.image(53, 457 + 0, CST.LEVEL.ROUTE.BAR_FULL).setOrigin(0).setDepth(1)
         level.add.image(53, 457, CST.LEVEL.ROUTE.BAR_EMPTY).setOrigin(0).setDepth(0)
-        full.displayWidth = 65
-        level.visual.bar = full
+        full.displayWidth = 32.5
+        level.visual.route_bar = full
     },
 
-    advanceRouteBar(level, index) {
+    advanceRouteBar(level, index, dist) {
         // delta between squares = 90
         // square width = 65
         // therefore, the animated bit is 25 pixels long
-        const target = 90 * (index + 1)
-        const bar = level.visual.bar
-        bar.displayWidth = target - 25
+        const route_target = 32.5 + 90 * (index + 1)
+        const route_bar = level.visual.route_bar
+        route_bar.displayWidth = route_target - 90
+
+        const battery_perc = dist / level.GAMEPLAY.MAX_AUTONOMY
+        const battery_ref = level.visual.battery_ref
+        const battery_bar = level.visual.battery_bar
+        const battery_target = battery_perc * battery_ref.displayWidth
+
         level.tweens.add({
-            targets: bar,
-            displayWidth: target,
-            // animation takes one second
-            duration: 1000,
+            targets: [route_bar, battery_bar],
+            // displayWidth: route_target,
+            displayWidth: function(target, targetKey, value, targetIndex, totalTargets, tween) {
+                switch (targetIndex) {
+                    case 0:
+                        return route_target
+                    case 1:
+                        return battery_target
+                    default:
+                        return 0
+                }
+            },
+            duration: CST.ANIM.DURATION,
             ease: Phaser.Math.Easing.Linear,
             onComplete: () => {
                 level.return.index++
@@ -117,9 +133,8 @@ export const LEVEL = {
     },
 
     resetRouteBar(level) {
-        const bar = level.visual.bar
-        bar.frame.cutWidth = 65
-        bar.frame.updateUVs()
+        level.visual.route_bar.displayWidth = 0
+        level.visual.battery_bar.displayWidth = 0
     },
 
     // place route slots on bottom of screen
@@ -147,8 +162,11 @@ export const LEVEL = {
          */
         const full = level.add.image(53, 528, CST.LEVEL.BATTERY.FULL).setOrigin(0).setDepth(1)
         const usable = level.add.image(53, 528, CST.LEVEL.BATTERY.USABLE).setOrigin(0).setDepth(2)
-        usable.frame.cutWidth = full.frame.width * level.DATA.max_battery_dec
-        usable.frame.updateUVs();
+        const used = level.add.image(53, 528, CST.LEVEL.BATTERY.USED).setOrigin(0).setDepth(2)
+        usable.displayWidth = full.frame.width * level.DATA.max_battery_dec
+        level.visual.battery_ref = usable
+        used.displayWidth = 0
+        level.visual.battery_bar = used
         level.add.text(542.64, 546.5, level.GAMEPLAY.current_battery, CST.STYLES.BATTERY_PERCENTAGE).setOrigin(0.5).setDepth(3)
     },
 
@@ -284,28 +302,29 @@ export const LEVEL = {
         if (level.return === undefined) return
         const data = level.return
 
-        if (data.route.length === 0) {
-            if (data.distance >= level.GAMEPLAY.MAX_AUTONOMY) {
-                level.return = undefined
-                if (LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)) {
-                    level.scene.start(
-                        CST.SCENES.LEVEL,
-                        LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++]
-                    )
-                } else {
-                    LEVELCONFIG.NEXT = 1
-                    level.scene.start(CST.SCENES.LOAD)
-                }    
+        if (data.distance >= level.GAMEPLAY.MAX_AUTONOMY) {
+            level.return = undefined
+            if (LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)) {
+                level.scene.start(
+                    CST.SCENES.LEVEL,
+                    UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++])
+                )
             } else {
-                level.return = undefined
-                this.resetRouteBar(level)
+                LEVELCONFIG.NEXT = 1
+                level.scene.start(CST.SCENES.LOAD)
             }
+            return
+        }
+
+        if (data.route.length === 0) {
+            level.return = undefined
+            this.resetRouteBar(level)
             return
         }
 
         const segment = data.route.shift()
         data.distance += segment
-        this.advanceRouteBar(level, data.index)
+        this.advanceRouteBar(level, data.index, data.distance)
     },
 
     getDirectionsUrl(level) {

@@ -38,6 +38,7 @@ export const CST = {
         BATTERY: {
             FULL: 'level_battery_full_bar',
             USABLE: 'level_battery_usable_bar',
+            USED: 'level_battery_used_bar',
         },
         ROUTE: {
             OPEN: 'level_route_open',
@@ -116,4 +117,7 @@ export const CST = {
             WARM: 0.96,
         },
     },
+    ANIM: {
+        DURATION: 500
+    }
 }
