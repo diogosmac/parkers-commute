@@ -13,9 +13,7 @@ export class LoadScene extends Phaser.Scene {
     }
     preload() {
 
-        // change screen res to 800x600
-
-        // load images, spritesheets, sounds
+        // load assets
 
         // // for title screen
         this.load.image(CST.TITLE.BACKGROUND, './assets/title/bg.png')
@@ -52,6 +50,8 @@ export class LoadScene extends Phaser.Scene {
         // // // routes
         this.load.image(CST.LEVEL.ROUTE.OPEN, './assets/level/routes/open.png')
         this.load.image(CST.LEVEL.ROUTE.CLOSED, './assets/level/routes/closed.png')
+        this.load.image(CST.LEVEL.ROUTE.BAR_EMPTY, './assets/level/routes/bar_empty.png')
+        this.load.image(CST.LEVEL.ROUTE.BAR_FULL, './assets/level/routes/bar_full.png')
         this.load.image(CST.LEVEL.ROUTE.HOME, './assets/level/routes/home.png')
         this.load.image(CST.LEVEL.ROUTE.WORK, './assets/level/routes/work.png')
         this.load.image(CST.LEVEL.ROUTE.SUPERMARKET, './assets/level/routes/supermarket.png')
@@ -69,7 +69,8 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.LEVEL.GO.UNUSABLE, './assets/level/go_unusable.png')
 
         /*
-            Create a loading bar
+            @@@ JUST IN CASE @@@
+            Creating a loading bar
             Loader events:
                 complete - when done loading everything
                 progress - loader number progress in decimal

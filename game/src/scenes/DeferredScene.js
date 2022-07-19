@@ -35,8 +35,8 @@ export class DeferredScene extends Phaser.Scene {
                     .then(response => response.json())
                     .then((data) => {
                         this.data.return = data
-                        LEVEL.processCheckCall(this.data)
                         overlay.style.display = 'none'
+                        LEVEL.processCheckCall(this.data)
                     })
                 clearTimeout(timeout)
                 break

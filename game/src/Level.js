@@ -85,15 +85,52 @@ export const LEVEL = {
         dest.text.setText(dest.uses)
     },
 
+    placeRouteBar(level) {
+        /**
+         * @@@ INFO ON CROPPING IMAGES
+         * https://www.html5gamedevs.com/topic/36973-showing-cropped-image/
+         */
+        const full = level.add.image(53, 457 + 0, CST.LEVEL.ROUTE.BAR_FULL).setOrigin(0).setDepth(1)
+        level.add.image(53, 457, CST.LEVEL.ROUTE.BAR_EMPTY).setOrigin(0).setDepth(0)
+        full.displayWidth = 65
+        level.visual.bar = full
+    },
+
+    advanceRouteBar(level, index) {
+        // delta between squares = 90
+        // square width = 65
+        // therefore, the animated bit is 25 pixels long
+        const target = 90 * (index + 1)
+        const bar = level.visual.bar
+        bar.displayWidth = target - 25
+        level.tweens.add({
+            targets: bar,
+            displayWidth: target,
+            // animation takes one second
+            duration: 1000,
+            ease: Phaser.Math.Easing.Linear,
+            onComplete: () => {
+                level.return.index++
+                this.levelCheck(level)
+            },
+        })
+    },
+
+    resetRouteBar(level) {
+        const bar = level.visual.bar
+        bar.frame.cutWidth = 65
+        bar.frame.updateUVs()
+    },
+
     // place route slots on bottom of screen
     placeRouteSlot(level, i, x, y) {
         if (i) {
             level.visual.openRoutes.push(
-                level.add.image(x, y, CST.LEVEL.ROUTE.OPEN).setOrigin(0).setDepth(1)
+                level.add.image(x, y, CST.LEVEL.ROUTE.OPEN).setOrigin(0).setDepth(2)
             )
             if (i > 1) {
                 level.visual.closedRoutes.push(
-                    level.add.image(x, y, CST.LEVEL.ROUTE.CLOSED).setOrigin(0).setDepth(2)
+                    level.add.image(x, y, CST.LEVEL.ROUTE.CLOSED).setOrigin(0).setDepth(3)
                 )
             }
         } else {
@@ -108,8 +145,8 @@ export const LEVEL = {
          * @@@ INFO ON CROPPING IMAGES
          * https://www.html5gamedevs.com/topic/36973-showing-cropped-image/
          */
-        let full = level.add.image(53, 528, CST.LEVEL.BATTERY.FULL).setOrigin(0).setDepth(1)
-        let usable = level.add.image(53, 528, CST.LEVEL.BATTERY.USABLE).setOrigin(0).setDepth(2)
+        const full = level.add.image(53, 528, CST.LEVEL.BATTERY.FULL).setOrigin(0).setDepth(1)
+        const usable = level.add.image(53, 528, CST.LEVEL.BATTERY.USABLE).setOrigin(0).setDepth(2)
         usable.frame.cutWidth = full.frame.width * level.DATA.max_battery_dec
         usable.frame.updateUVs();
         level.add.text(542.64, 546.5, level.GAMEPLAY.current_battery, CST.STYLES.BATTERY_PERCENTAGE).setOrigin(0.5).setDepth(3)
@@ -231,26 +268,44 @@ export const LEVEL = {
             return
         }
 
-        const route = response.routes[0]
-        let distance = 0
-        for (const [i, s] of route.legs.entries()) {
-            distance += s.distance.value
+        const route = response.routes[0].legs.map(
+            x => x.distance.value
+        )
+
+        level.return = {
+            route: route,
+            distance: 0,
+            index: 0,
         }
-        if (distance >= level.GAMEPLAY.MAX_AUTONOMY) {
-            // if (LEVELCONFIG.NEXT in LEVELCONFIG.LEVELS) {
-            if (LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)) {
-                level.scene.start(
-                    CST.SCENES.LEVEL,
-                    LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++]
-                )
+        this.levelCheck(level)
+    },
+
+    levelCheck(level) {
+        if (level.return === undefined) return
+        const data = level.return
+
+        if (data.route.length === 0) {
+            if (data.distance >= level.GAMEPLAY.MAX_AUTONOMY) {
+                level.return = undefined
+                if (LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)) {
+                    level.scene.start(
+                        CST.SCENES.LEVEL,
+                        LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++]
+                    )
+                } else {
+                    LEVELCONFIG.NEXT = 1
+                    level.scene.start(CST.SCENES.LOAD)
+                }    
             } else {
-                LEVELCONFIG.NEXT = 1
-                level.scene.start(CST.SCENES.LOAD)
+                level.return = undefined
+                this.resetRouteBar(level)
             }
+            return
         }
 
-        level.return = undefined
-        delete level.return
+        const segment = data.route.shift()
+        data.distance += segment
+        this.advanceRouteBar(level, data.index)
     },
 
     getDirectionsUrl(level) {

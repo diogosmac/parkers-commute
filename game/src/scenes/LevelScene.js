@@ -44,6 +44,8 @@ export class LevelScene extends Phaser.Scene {
 
         LEVEL.setupBatteryBar(this)
 
+        LEVEL.placeRouteBar(this)
+
         for (let i = 0; i < 8; i++) {
             LEVEL.placeRouteSlot(this, i, 53 + i * 90, 429)
         }

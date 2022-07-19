@@ -42,6 +42,8 @@ export const CST = {
         ROUTE: {
             OPEN: 'level_route_open',
             CLOSED: 'level_route_closed',
+            BAR_EMPTY: 'level_route_bar_empty',
+            BAR_FULL: 'level_route_bar_full',
             HOME: 'level_route_home',
             WORK: 'level_route_work',
             SUPERMARKET: 'level_route_supermarket',
