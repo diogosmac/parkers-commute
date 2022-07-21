@@ -1,6 +1,6 @@
-import { CST } from '../CST'
-import { LEVELCONFIG } from '../LevelConfig'
-import { UTILS } from '../Utils'
+import { CST } from '../modules/CST'
+import { LEVELCONFIG } from '../modules/LevelConfig'
+import { UTILS } from '../modules/Utils'
 
 export class MenuScene extends Phaser.Scene {
     constructor() {
@@ -56,6 +56,12 @@ export class MenuScene extends Phaser.Scene {
             hoverSprite.setVisible(false)
         })
         playButton.on(CST.MOUSE.CLICK_RELEASE, () => {
+            // only allows playing once all of
+            // the levels have been calculated
+            for (const level of Object.values(LEVELCONFIG.LEVELS)) {
+                if (!level.hasOwnProperty('MAX_AUTONOMY')) return
+            }
+            // if it passes the check, the player may start
             this.scene.start(
                 CST.SCENES.LEVEL,
                 UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++])
@@ -72,7 +78,7 @@ export class MenuScene extends Phaser.Scene {
             hoverSprite.setVisible(false)
         })
         optionsButton.on(CST.MOUSE.CLICK_RELEASE, () => {
-            this.scene.start(CST.SCENES.CREDITS)
+            this.scene.launch(CST.SCENES.CREDITS)
         })
 
     }

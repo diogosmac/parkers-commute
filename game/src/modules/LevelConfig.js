@@ -1,8 +1,9 @@
 import { CONFIG } from "./config"
 import { CST } from "./CST"
+import { POWERUPS } from "./Powerups"
 
 export const LEVELCONFIG = {
-    NEXT: 1,
+    NEXT: 2,
 
     // DATA: flavor data for the level
     // GAMEPLAY: gameplay elements for the level
@@ -62,7 +63,6 @@ export const LEVELCONFIG = {
                 max_battery_dec: 0.4,
             },
             GAMEPLAY: {
-                current_battery: '0%',
                 next_route: 1,
                 selected_route: null,
                 destinations: {
@@ -106,9 +106,15 @@ export const LEVELCONFIG = {
                         icon: CST.LEVEL.ROUTE.HOME,
                     },
                 ],
-                powerups: []
+                powerups: [
+                    'Heating',
+                    'Cooling',
+                    'Double-Time',
+                    'Power-Down',
+                ]
             },
-            DESIRED_ROUTE: ['Home', 'Work', 'Home', 'Supermarket', 'Home']
+            DESIRED_ROUTE: ['Home', 'Work', 'Home', 'Supermarket', 'Home'],
+            DESIRED_POWERUPS: ['Heating', 'Cooling', 'Double-Time', 'Power-Down']
         }
     }
 }

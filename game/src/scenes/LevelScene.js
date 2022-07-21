@@ -1,5 +1,5 @@
-import { CST } from '../CST'
-import { LEVEL } from '../Level'
+import { CST } from '../modules/CST'
+import { LEVEL } from '../modules/Level'
 
 export class LevelScene extends Phaser.Scene {
     constructor() {
@@ -15,6 +15,9 @@ export class LevelScene extends Phaser.Scene {
         this.DATA = data.DATA
         this.GAMEPLAY = data.GAMEPLAY
         this.GAMEPLAY.MAX_AUTONOMY = data.MAX_AUTONOMY
+        this.GAMEPLAY.DIST_MULTIPLIER = 1
+        this.GAMEPLAY.AUTONOMY_MULTIPLIER = 1
+        this.GAMEPLAY.ACTIVE_POWERUPS = []
     }
     preload() {
         // constant between levels - will be in general "generateLevel" function

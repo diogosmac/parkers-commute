@@ -1,4 +1,4 @@
-import { CST } from '../CST'
+import { CST } from '../modules/CST'
 
 export class CreditsScene extends Phaser.Scene {
     constructor() {
@@ -15,7 +15,7 @@ export class CreditsScene extends Phaser.Scene {
         const button = this.add.image(686, 46, CST.CREDITS.BUTTON).setOrigin(0).setDepth(2)
         button.setInteractive()
         button.on(CST.MOUSE.CLICK_RELEASE, () => {
-            this.scene.start(CST.SCENES.MENU)
+            this.scene.stop()
         })
     }
 }

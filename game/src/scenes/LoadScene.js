@@ -1,7 +1,7 @@
-import { CONFIG } from '../config'
-import { CST } from '../CST'
-import { LEVEL, REQUESTS } from '../Level'
-import { LEVELCONFIG } from '../LevelConfig'
+import { CONFIG } from '../modules/config'
+import { CST } from '../modules/CST'
+import { LEVEL, REQUESTS } from '../modules/Level'
+import { LEVELCONFIG } from '../modules/LevelConfig'
 
 export class LoadScene extends Phaser.Scene {
     constructor() {
@@ -42,6 +42,10 @@ export class LoadScene extends Phaser.Scene {
 
         // // // powerups
         this.load.image(CST.LEVEL.POWERUPS.BAR, 'level/powerups/bar.png')
+        this.load.image(CST.LEVEL.POWERUPS.HEAT, 'level/powerups/heating.png')
+        this.load.image(CST.LEVEL.POWERUPS.COOL, 'level/powerups/cooling.png')
+        this.load.image(CST.LEVEL.POWERUPS.DOUBLETIME, 'level/powerups/double-time.png')
+        this.load.image(CST.LEVEL.POWERUPS.POWERDOWN, 'level/powerups/power-down.png')
 
         // // // destinations
         this.load.image(CST.DEST.SELECTED, 'level/dest/selected.png')

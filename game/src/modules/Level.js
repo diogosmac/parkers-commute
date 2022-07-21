@@ -1,6 +1,7 @@
 import { CONFIG } from './config'
 import { CST } from './CST'
 import { LEVELCONFIG } from './LevelConfig'
+import { POWERUPS } from './Powerups'
 import { UTILS } from './Utils'
 
 export const REQUESTS = {
@@ -34,7 +35,7 @@ export const LEVEL = {
 
         // // set max battery for level on top right
         level.add.image(695.55, 28, CST.ICONS.BATTERY).setOrigin(0).setDepth(1)
-        level.add.text(661.78, 64, level.DATA.max_battery + '%', CST.STYLES.FLAVOR_LARGE).setOrigin(0.5)
+        level.visual.BATTERY = level.add.text(661.78, 64, level.DATA.max_battery + '%', CST.STYLES.FLAVOR_LARGE).setOrigin(0.5)
 
         // // place map and power-up bar placeholders
         level.add.image(53, 136, CST.PLACEHOLDER.MAP).setOrigin(0).setDepth(1)
@@ -86,10 +87,31 @@ export const LEVEL = {
     },
 
     placePowerUps(level) {
-        if (level.GAMEPLAY.hasOwnProperty('powerups')) {
-            level.add.image(683, 136, CST.LEVEL.POWERUPS.BAR).setOrigin(0).setDepth(1)
-        } else {
-            level.add.image(683, 136, CST.PLACEHOLDER.POWERUPS).setOrigin(0).setDepth(1)
+        if (!level.GAMEPLAY.hasOwnProperty('powerups')) {
+            level.add.image(675, 136, CST.PLACEHOLDER.POWERUPS).setOrigin(0).setDepth(1)
+            return
+        }
+
+        level.add.image(675, 136, CST.LEVEL.POWERUPS.BAR).setOrigin(0).setDepth(1)
+        let i = 0
+        // only 4 maximum powerups allowed per level
+        for (const name of level.GAMEPLAY.powerups.slice(0, 4)) {
+            const p = POWERUPS[name]
+            const icon = level.add.image(
+                POWERUPS.POSITION.X,
+                POWERUPS.POSITION.Y_START + POWERUPS.POSITION.Y_DELTA * i++,
+                p.icon
+            ).setOrigin(0).setDepth(2)
+            icon.setInteractive()
+            icon.on(CST.MOUSE.CLICK_RELEASE, () => {
+                if (level.GAMEPLAY.ACTIVE_POWERUPS.includes(name)) {
+                    UTILS.arrayRemove(level.GAMEPLAY.ACTIVE_POWERUPS, name)
+                    p.unapply(level)
+                } else {
+                    level.GAMEPLAY.ACTIVE_POWERUPS.push(name)
+                    p.apply(level)
+                }
+            })
         }
     },
 
@@ -112,7 +134,9 @@ export const LEVEL = {
         const route_bar = level.visual.route_bar
         route_bar.displayWidth = route_target - 90
 
-        const battery_perc = dist / level.GAMEPLAY.MAX_AUTONOMY
+        const autonomy = level.GAMEPLAY.MAX_AUTONOMY * level.GAMEPLAY.AUTONOMY_MULTIPLIER
+        const battery_perc = Math.min(1, dist / autonomy)
+        const max_width = level.visual.battery_full.displayWidth
         const battery_ref = level.visual.battery_ref
         const battery_bar = level.visual.battery_bar
         const battery_target = battery_perc * battery_ref.displayWidth
@@ -132,6 +156,10 @@ export const LEVEL = {
             },
             duration: CST.ANIM.DURATION,
             ease: Phaser.Math.Easing.Linear,
+            onUpdate: (e) => {
+                const p = e.data[1].current / max_width
+                this.updateBatteryPercentage(level, p)
+            },
             onComplete: () => {
                 level.return.index++
                 this.levelCheck(level)
@@ -142,6 +170,7 @@ export const LEVEL = {
     resetRouteBar(level) {
         level.visual.route_bar.displayWidth = 0
         level.visual.battery_bar.displayWidth = 0
+        this.updateBatteryPercentage(level, 0)
     },
 
     // place route slots on bottom of screen
@@ -170,11 +199,17 @@ export const LEVEL = {
         const full = level.add.image(53, 528, CST.LEVEL.BATTERY.FULL).setOrigin(0).setDepth(1)
         const usable = level.add.image(53, 528, CST.LEVEL.BATTERY.USABLE).setOrigin(0).setDepth(2)
         const used = level.add.image(53, 528, CST.LEVEL.BATTERY.USED).setOrigin(0).setDepth(2)
+        level.visual.battery_full = full
         usable.displayWidth = full.frame.width * level.DATA.max_battery_dec
         level.visual.battery_ref = usable
         used.displayWidth = 0
         level.visual.battery_bar = used
-        level.add.text(542.64, 546.5, level.GAMEPLAY.current_battery, CST.STYLES.BATTERY_PERCENTAGE).setOrigin(0.5).setDepth(3)
+        level.visual.battery_perc = level.add.text(542.64, 546.5, '0%', CST.STYLES.BATTERY_PERCENTAGE).setOrigin(0.5).setDepth(3)
+    },
+
+    updateBatteryPercentage(level, perc) {
+        perc = Math.round(perc * 100)
+        level.visual.battery_perc.setText(perc + '%')
     },
 
     checkAndRemoveRoute(level, curr) {
@@ -188,12 +223,12 @@ export const LEVEL = {
             route.icon.destroy()
             dest.uses++
             LEVEL.updateDestDisplay(dest)
-            level.GAMEPLAY.routes.pop(curr)
+            level.GAMEPLAY.routes.pop()
             level.visual.closedRoutes[level.GAMEPLAY.next_route--].setVisible(true)
             this.updateGMapsUrl(level)
-            if (level.GAMEPLAY.next_route == 1) {
-                level.visual.goButton.setVisible(false)
-            }
+            const last = level.GAMEPLAY.routes[--curr].name
+            let visible = (last === 'Home') && (level.GAMEPLAY.next_route > 1)
+            level.visual.goButton.setVisible(visible)
         }
     },
 
@@ -220,10 +255,8 @@ export const LEVEL = {
                 LEVEL.updateDestDisplay(dest)
                 level.GAMEPLAY.selected_route = null
                 level.visual.dest_outline.setVisible(false)
+                level.visual.goButton.setVisible(selected === 'Home')
                 this.updateGMapsUrl(level)
-                if (level.GAMEPLAY.next_route > 1) {
-                    level.visual.goButton.setVisible(true)
-                }
             }
         }
     },
@@ -277,8 +310,14 @@ export const LEVEL = {
         for (const s of route.legs) {
             distance += s.distance.value
         }
-        level.MAX_AUTONOMY = distance
-        level.DATA.max_battery_dec = (distance / 1000) / CST.CALC.BASE
+        let multiplier = 1
+        if (level.hasOwnProperty('DESIRED_POWERUPS')) {
+            for (const p of level.DESIRED_POWERUPS) {
+                multiplier *= POWERUPS[p].multiplier
+            }
+        }
+        level.MAX_AUTONOMY = distance * multiplier
+        level.DATA.max_battery_dec = (level.MAX_AUTONOMY / 1000) / CST.CALC.BASE
         level.DATA.max_battery = Math.round(level.DATA.max_battery_dec * 100)
 
         level.return = undefined
@@ -309,7 +348,10 @@ export const LEVEL = {
         if (level.return === undefined) return
         const data = level.return
 
-        if (data.distance >= level.GAMEPLAY.MAX_AUTONOMY) {
+        const game = level.GAMEPLAY
+
+        const autonomy = game.MAX_AUTONOMY * game.AUTONOMY_MULTIPLIER
+        if (data.distance >= autonomy) {
             level.return = undefined
             if (LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)) {
                 level.scene.start(
@@ -330,7 +372,7 @@ export const LEVEL = {
         }
 
         const segment = data.route.shift()
-        data.distance += segment
+        data.distance += segment * game.DIST_MULTIPLIER
         this.advanceRouteBar(level, data.index, data.distance)
     },
 

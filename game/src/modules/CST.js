@@ -56,6 +56,10 @@ export const CST = {
         LOAD: 'level_load_overlay',
         POWERUPS: {
             BAR: 'level_powerups_bar',
+            HEAT: 'level_powerups_heat',
+            COOL: 'level_powerups_cool',
+            DOUBLETIME: 'level_powerups_doubletime',
+            POWERDOWN: 'level_powerups_powerdown',
         }
     },
     ICONS: {
@@ -121,6 +125,6 @@ export const CST = {
         },
     },
     ANIM: {
-        DURATION: 500
+        DURATION: 1000
     }
 }

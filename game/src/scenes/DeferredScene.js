@@ -1,5 +1,5 @@
-import { CST } from '../CST'
-import { LEVEL, REQUESTS } from '../Level'
+import { CST } from '../modules/CST'
+import { LEVEL, REQUESTS } from '../modules/Level'
 
 export class DeferredScene extends Phaser.Scene {
     constructor() {
