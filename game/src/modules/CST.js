@@ -60,6 +60,7 @@ export const CST = {
             COOL: 'level_powerups_cool',
             DOUBLETIME: 'level_powerups_doubletime',
             POWERDOWN: 'level_powerups_powerdown',
+            SELECTED: 'level_powerups_selected',
         }
     },
     ICONS: {

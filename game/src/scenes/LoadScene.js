@@ -46,6 +46,7 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.LEVEL.POWERUPS.COOL, 'level/powerups/cooling.png')
         this.load.image(CST.LEVEL.POWERUPS.DOUBLETIME, 'level/powerups/double-time.png')
         this.load.image(CST.LEVEL.POWERUPS.POWERDOWN, 'level/powerups/power-down.png')
+        this.load.image(CST.LEVEL.POWERUPS.SELECTED, 'level/powerups/selected.png')
 
         // // // destinations
         this.load.image(CST.DEST.SELECTED, 'level/dest/selected.png')

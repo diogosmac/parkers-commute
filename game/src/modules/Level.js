@@ -97,19 +97,24 @@ export const LEVEL = {
         // only 4 maximum powerups allowed per level
         for (const name of level.GAMEPLAY.powerups.slice(0, 4)) {
             const p = POWERUPS[name]
+            const x = POWERUPS.POSITION.X
+            const y = POWERUPS.POSITION.Y + POWERUPS.POSITION.DELTA * i++
+            const selected = level.add.image(
+                x - 4, y - 4, CST.LEVEL.POWERUPS.SELECTED
+            ).setOrigin(0).setDepth(2).setVisible(false)
             const icon = level.add.image(
-                POWERUPS.POSITION.X,
-                POWERUPS.POSITION.Y_START + POWERUPS.POSITION.Y_DELTA * i++,
-                p.icon
-            ).setOrigin(0).setDepth(2)
+                x, y, p.icon
+            ).setOrigin(0).setDepth(3)
             icon.setInteractive()
             icon.on(CST.MOUSE.CLICK_RELEASE, () => {
                 if (level.GAMEPLAY.ACTIVE_POWERUPS.includes(name)) {
                     UTILS.arrayRemove(level.GAMEPLAY.ACTIVE_POWERUPS, name)
                     p.unapply(level)
+                    selected.setVisible(false)
                 } else {
                     level.GAMEPLAY.ACTIVE_POWERUPS.push(name)
                     p.apply(level)
+                    selected.setVisible(true)
                 }
             })
         }
