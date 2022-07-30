@@ -5,6 +5,9 @@ export const CST = {
         LEVEL: 'LEVEL',
         DEFER: 'DEFER',
         CREDITS: 'CREDITS',
+        MODAL: 'MODAL',
+        MODAL_T: 'MODAL_TRANSITION',
+        MULTIMODAL: 'MULTIMODAL'
     },
     STYLES: {
         BATTERY_PERCENTAGE: {
@@ -56,11 +59,14 @@ export const CST = {
         LOAD: 'level_load_overlay',
         POWERUPS: {
             BAR: 'level_powerups_bar',
+            HOT: 'level_powerups_hot',
             HEAT: 'level_powerups_heat',
+            COLD: 'level_powerups_cold',
             COOL: 'level_powerups_cool',
             DOUBLETIME: 'level_powerups_doubletime',
             POWERDOWN: 'level_powerups_powerdown',
             SELECTED: 'level_powerups_selected',
+            DISABLED: 'level_powerups_disabled',
         }
     },
     ICONS: {
@@ -92,40 +98,52 @@ export const CST = {
     WEATHER: {
         REGULAR: {
             ICON: 'weather_regular',
-            PRECIPITATION: 35,
+            HUMIDITY: 35,
             TEMP: 20,
         },
         CHILL: {
             ICON: 'weather_chill',
-            PRECIPITATION: 70,
+            HUMIDITY: 70,
             TEMP: 9,
         },
         COLD: {
             ICON: 'weather_cold',
-            PRECIPITATION: 85,
+            HUMIDITY: 85,
             TEMP: -6,
         },
         HOT: {
             ICON: 'weather_hot',
-            PRECIPITATION: 0,
+            HUMIDITY: 0,
             TEMP: 35,
         },
         WARM: {
             ICON: 'weather_warm',
-            PRECIPITATION: 10,
+            HUMIDITY: 10,
             TEMP: 29,
         },
     },
     CALC: {
         BASE: 376.59,
         FACTOR: {
-            CHILL: 0.88,
-            COLD: 0.60,
-            HOT: 0.83,
-            WARM: 0.96,
+            CHILL: 1.15,
+            COLD: 1.5,
+            HOT: 1.15,
+            WARM: 1.05,
         },
     },
     ANIM: {
         DURATION: 1000
-    }
+    },
+    MODALS: {
+        BG: 'modals_bg',
+        INTRO: 'modals_intro',
+        TUTORIAL_1: 'modals_tutorial_1',
+        TUTORIAL_2: 'modals_tutorial_2',
+        TUTORIAL_3: 'modals_tutorial_3',
+        NAV_L: 'modals_nav_l',
+        NAV_R: 'modals_nav_r',
+        BTN_INTRO: 'modals_btn_letsgo',
+        BTN_TUTORIAL: 'modals_btn_gotit',
+        BTN_IMREADY: 'modals_btn_imready',
+    },
 }

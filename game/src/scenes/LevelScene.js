@@ -1,5 +1,6 @@
 import { CST } from '../modules/CST'
 import { LEVEL } from '../modules/Level'
+import { LEVELCONFIG } from '../modules/LevelConfig'
 
 export class LevelScene extends Phaser.Scene {
     constructor() {
@@ -18,6 +19,10 @@ export class LevelScene extends Phaser.Scene {
         this.GAMEPLAY.DIST_MULTIPLIER = 1
         this.GAMEPLAY.AUTONOMY_MULTIPLIER = 1
         this.GAMEPLAY.ACTIVE_POWERUPS = []
+
+        if (data.hasOwnProperty('script_key')) {
+            this.script = LEVELCONFIG.LEVELS[data.script_key].script
+        }
     }
     preload() {
         // constant between levels - will be in general "generateLevel" function
@@ -58,6 +63,11 @@ export class LevelScene extends Phaser.Scene {
         LEVEL.setupRoutes(this)
 
         this.visual.goButton = LEVEL.setupGoButton(this)
+
+        if (this.script !== undefined) {
+            this.script(this)
+            this.script = undefined
+        }
 
     }
 

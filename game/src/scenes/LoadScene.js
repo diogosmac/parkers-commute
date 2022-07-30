@@ -42,11 +42,14 @@ export class LoadScene extends Phaser.Scene {
 
         // // // powerups
         this.load.image(CST.LEVEL.POWERUPS.BAR, 'level/powerups/bar.png')
+        this.load.image(CST.LEVEL.POWERUPS.HOT, 'level/powerups/hot.png')
         this.load.image(CST.LEVEL.POWERUPS.HEAT, 'level/powerups/heating.png')
+        this.load.image(CST.LEVEL.POWERUPS.COLD, 'level/powerups/cold.png')
         this.load.image(CST.LEVEL.POWERUPS.COOL, 'level/powerups/cooling.png')
         this.load.image(CST.LEVEL.POWERUPS.DOUBLETIME, 'level/powerups/double-time.png')
         this.load.image(CST.LEVEL.POWERUPS.POWERDOWN, 'level/powerups/power-down.png')
         this.load.image(CST.LEVEL.POWERUPS.SELECTED, 'level/powerups/selected.png')
+        this.load.image(CST.LEVEL.POWERUPS.DISABLED, 'level/powerups/unusable.png')
 
         // // // destinations
         this.load.image(CST.DEST.SELECTED, 'level/dest/selected.png')
@@ -78,6 +81,18 @@ export class LoadScene extends Phaser.Scene {
         // // // go button
         this.load.image(CST.LEVEL.GO.USABLE, 'level/go_button.png')
         this.load.image(CST.LEVEL.GO.UNUSABLE, 'level/go_unusable.png')
+
+        // // // modals
+        this.load.image(CST.MODALS.BG, 'modals/overlay-bg.png')
+        this.load.image(CST.MODALS.INTRO, 'modals/1_intro.png')
+        this.load.image(CST.MODALS.TUTORIAL_1, 'modals/2_tutorial_1-3.png')
+        this.load.image(CST.MODALS.TUTORIAL_2, 'modals/2_tutorial_2-3.png')
+        this.load.image(CST.MODALS.TUTORIAL_3, 'modals/2_tutorial_3-3.png')
+        this.load.image(CST.MODALS.NAV_L, 'modals/button_left.png')
+        this.load.image(CST.MODALS.NAV_R, 'modals/button_right.png')
+        this.load.image(CST.MODALS.BTN_INTRO, 'modals/button_lets-go.png')
+        this.load.image(CST.MODALS.BTN_TUTORIAL, 'modals/button_got-it.png')
+        this.load.image(CST.MODALS.BTN_IMREADY, 'modals/button_im-ready.png')        
 
         /*
             @@@ JUST IN CASE @@@

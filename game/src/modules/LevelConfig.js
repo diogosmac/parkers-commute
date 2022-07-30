@@ -1,6 +1,6 @@
 import { CONFIG } from "./config"
 import { CST } from "./CST"
-import { POWERUPS } from "./Powerups"
+import { LEVEL } from "./Level"
 
 export const LEVELCONFIG = {
     NEXT: 2,
@@ -11,11 +11,7 @@ export const LEVELCONFIG = {
     LEVELS: {
         1: {
             DATA: {
-                weather: CST.WEATHER.REGULAR.ICON,
-                temperature: CST.WEATHER.REGULAR.TEMP,
-                humidity: '77',
-                max_battery: '40',
-                max_battery_dec: 0.4,
+                WEATHER: CST.WEATHER.REGULAR,
             },
             GAMEPLAY: {
                 current_battery: '0%',
@@ -56,11 +52,7 @@ export const LEVELCONFIG = {
         },
         2: {
             DATA: {
-                weather: CST.WEATHER.REGULAR.ICON,
-                temperature: CST.WEATHER.REGULAR.TEMP,
-                humidity: '77',
-                max_battery: '40',
-                max_battery_dec: 0.4,
+                WEATHER: CST.WEATHER.REGULAR,
             },
             GAMEPLAY: {
                 next_route: 1,
@@ -107,14 +99,23 @@ export const LEVELCONFIG = {
                     },
                 ],
                 powerups: [
-                    'Heating',
+                    'Hot',
                     'Cooling',
+                    // 'Cold',
+                    // 'Heating',
                     'Double-Time',
                     'Power-Down',
                 ]
             },
             DESIRED_ROUTE: ['Home', 'Work', 'Home', 'Supermarket', 'Home'],
-            DESIRED_POWERUPS: ['Heating', 'Cooling', 'Double-Time', 'Power-Down']
+            DESIRED_POWERUPS: ['Hot', 'Cooling', 'Double-Time', 'Power-Down'],
+            script_key: 2,
+            script: function (l) {
+                LEVEL.launchModal(l, {
+                    text: [CST.MODALS.TUTORIAL_1, CST.MODALS.TUTORIAL_2, CST.MODALS.TUTORIAL_3],
+                    btn: CST.MODALS.BTN_TUTORIAL
+                })
+            }
         }
     }
 }

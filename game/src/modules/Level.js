@@ -24,13 +24,14 @@ export const LEVEL = {
         // // set background
         level.add.image(0, 0, CST.LEVEL.BACKGROUND).setOrigin(0).setDepth(0)
 
+        const weather = level.DATA.WEATHER
         // // set weather on top left
-        level.add.image(53, 24, level.DATA.weather).setOrigin(0).setDepth(1)
+        level.visual.weather = level.add.image(53, 24, weather.ICON).setOrigin(0).setDepth(1)
         // // // set temperature and icon
-        level.add.text(153.5, 41.5, level.DATA.temperature + 'ºC', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
+        level.visual.temperature = level.add.text(153.5, 41.5, weather.TEMP + 'ºC', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
         level.add.image(177, 29, CST.ICONS.TEMPERATURE).setOrigin(0).setDepth(1)
         // // // set humidity and icon
-        level.add.text(153.5, 76.5, level.DATA.humidity + '%', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
+        level.visual.humidity = level.add.text(153.5, 76.5, weather.HUMIDITY + '%', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
         level.add.image(177, 64, CST.ICONS.HUMIDITY).setOrigin(0).setDepth(1)
 
         // // set max battery for level on top right
@@ -94,29 +95,76 @@ export const LEVEL = {
 
         level.add.image(675, 136, CST.LEVEL.POWERUPS.BAR).setOrigin(0).setDepth(1)
         let i = 0
+        level.visual.selected_powerups = {}
+        level.visual.disabled_powerups = {}
         // only 4 maximum powerups allowed per level
         for (const name of level.GAMEPLAY.powerups.slice(0, 4)) {
             const p = POWERUPS[name]
             const x = POWERUPS.POSITION.X
             const y = POWERUPS.POSITION.Y + POWERUPS.POSITION.DELTA * i++
+
             const selected = level.add.image(
                 x - 4, y - 4, CST.LEVEL.POWERUPS.SELECTED
             ).setOrigin(0).setDepth(2).setVisible(false)
+
             const icon = level.add.image(
                 x, y, p.icon
             ).setOrigin(0).setDepth(3)
+
+            const disabledAtStart = POWERUPS[name].hasOwnProperty('requires')
+            const disabled = level.add.image(
+                x, y, CST.LEVEL.POWERUPS.DISABLED
+            ).setOrigin(0).setDepth(4).setVisible(disabledAtStart)
+            // makes 'disabled' block the clicks
+            disabled.setInteractive()
+
+            level.visual.selected_powerups[name] = selected
+            level.visual.disabled_powerups[name] = disabled
+
             icon.setInteractive()
             icon.on(CST.MOUSE.CLICK_RELEASE, () => {
                 if (level.GAMEPLAY.ACTIVE_POWERUPS.includes(name)) {
-                    UTILS.arrayRemove(level.GAMEPLAY.ACTIVE_POWERUPS, name)
-                    p.unapply(level)
-                    selected.setVisible(false)
+                    this.removePowerup(level, name)
                 } else {
-                    level.GAMEPLAY.ACTIVE_POWERUPS.push(name)
-                    p.apply(level)
-                    selected.setVisible(true)
+                    this.addPowerup(level, name)
                 }
+                this.checkPowerups(level)
             })
+        }
+    },
+
+    removePowerup(level, name) {
+        if (UTILS.arrayRemove(level.GAMEPLAY.ACTIVE_POWERUPS, name)) {
+            POWERUPS[name].unapply(level)
+            level.visual.selected_powerups[name].setVisible(false)
+        }
+    },
+
+    addPowerup(level, name) {
+        level.GAMEPLAY.ACTIVE_POWERUPS.push(name)
+        POWERUPS[name].apply(level)
+        level.visual.selected_powerups[name].setVisible(true)
+        if (POWERUPS[name].hasOwnProperty('incompatible')) {
+            for (const p of POWERUPS[name].incompatible) {
+                this.removePowerup(level, p)
+            }
+        }
+    },
+
+    checkPowerups(level) {
+        for (const name of level.GAMEPLAY.powerups.slice(0,4)) {
+            let hasRequirements = true
+            if (!POWERUPS[name].hasOwnProperty('requires')) {
+                level.visual.disabled_powerups[name].setVisible(false)
+            } else {
+                hasRequirements = POWERUPS[name].requires.every(
+                    p => level.GAMEPLAY.ACTIVE_POWERUPS.includes(p)
+                )
+                level.visual.disabled_powerups[name].setVisible(!hasRequirements)
+            }
+            if (!hasRequirements) {
+                this.removePowerup(level, name)
+            }
         }
     },
 
@@ -139,7 +187,7 @@ export const LEVEL = {
         const route_bar = level.visual.route_bar
         route_bar.displayWidth = route_target - 90
 
-        const autonomy = level.GAMEPLAY.MAX_AUTONOMY * level.GAMEPLAY.AUTONOMY_MULTIPLIER
+        const autonomy = level.GAMEPLAY.MAX_AUTONOMY / level.GAMEPLAY.AUTONOMY_MULTIPLIER
         const battery_perc = Math.min(1, dist / autonomy)
         const max_width = level.visual.battery_full.displayWidth
         const battery_ref = level.visual.battery_ref
@@ -321,6 +369,7 @@ export const LEVEL = {
                 multiplier *= POWERUPS[p].multiplier
             }
         }
+
         level.MAX_AUTONOMY = distance * multiplier
         level.DATA.max_battery_dec = (level.MAX_AUTONOMY / 1000) / CST.CALC.BASE
         level.DATA.max_battery = Math.round(level.DATA.max_battery_dec * 100)
@@ -355,7 +404,7 @@ export const LEVEL = {
 
         const game = level.GAMEPLAY
 
-        const autonomy = game.MAX_AUTONOMY * game.AUTONOMY_MULTIPLIER
+        const autonomy = game.MAX_AUTONOMY / game.AUTONOMY_MULTIPLIER
         if (data.distance >= autonomy) {
             level.return = undefined
             if (LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)) {
@@ -379,6 +428,16 @@ export const LEVEL = {
         const segment = data.route.shift()
         data.distance += segment * game.DIST_MULTIPLIER
         this.advanceRouteBar(level, data.index, data.distance)
+    },
+
+    launchModal(level, content) {
+        level.scene.launch(
+            CST.SCENES.MODAL,
+            {
+                maps: [level.visual.map_place, level.visual.map_directions],
+                content: content
+            }
+        )
     },
 
     getDirectionsUrl(level) {

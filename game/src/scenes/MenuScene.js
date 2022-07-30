@@ -62,9 +62,17 @@ export class MenuScene extends Phaser.Scene {
                 if (!level.hasOwnProperty('MAX_AUTONOMY')) return
             }
             // if it passes the check, the player may start
-            this.scene.start(
-                CST.SCENES.LEVEL,
-                UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++])
+            this.scene.launch(
+                CST.SCENES.MODAL_T,
+                {
+                    content: {
+                        text: CST.MODALS.INTRO,
+                        btn: CST.MODALS.BTN_INTRO,
+                    },
+                    next: CST.SCENES.LEVEL,
+                    next_data: UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++]),
+                    prev_scene: this.scene
+                }
             )
         })
 
