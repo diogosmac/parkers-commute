@@ -1,6 +1,6 @@
-import { CONFIG } from "./config"
-import { CST } from "./CST"
-import { LEVEL } from "./Level"
+import { CONFIG } from './config'
+import { CST } from './CST'
+import { LEVEL } from './Level'
 
 export const LEVELCONFIG = {
     NEXT: 2,
