@@ -88,11 +88,19 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.MODALS.TUTORIAL_1, 'modals/2_tutorial_1-3.png')
         this.load.image(CST.MODALS.TUTORIAL_2, 'modals/2_tutorial_2-3.png')
         this.load.image(CST.MODALS.TUTORIAL_3, 'modals/2_tutorial_3-3.png')
+        this.load.image(CST.MODALS.POWERUPS_1, 'modals/3_powerups_1-3.png')
+        this.load.image(CST.MODALS.POWERUPS_2, 'modals/3_powerups_2-3.png')
+        this.load.image(CST.MODALS.POWERUPS_3, 'modals/3_powerups_3-3.png')
+        this.load.image(CST.MODALS.NOMOREHELP, 'modals/4_no-more-help.png')
+        this.load.image(CST.MODALS.EOL, 'modals/5_end-of-level.png')
         this.load.image(CST.MODALS.NAV_L, 'modals/button_left.png')
         this.load.image(CST.MODALS.NAV_R, 'modals/button_right.png')
         this.load.image(CST.MODALS.BTN_INTRO, 'modals/button_lets-go.png')
         this.load.image(CST.MODALS.BTN_TUTORIAL, 'modals/button_got-it.png')
-        this.load.image(CST.MODALS.BTN_IMREADY, 'modals/button_im-ready.png')        
+        this.load.image(CST.MODALS.BTN_POWERUPS, 'modals/button_im-ready.png')
+        this.load.image(CST.MODALS.BTN_NOMOREHELP, 'modals/button_thumbs-up.png')
+        this.load.image(CST.MODALS.BTN_EOL_BACK, 'modals/button_level-repeat.png')
+        this.load.image(CST.MODALS.BTN_EOL_ADVANCE, 'modals/button_level-advance.png')
 
         /*
             @@@ JUST IN CASE @@@

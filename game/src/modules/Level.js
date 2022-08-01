@@ -407,19 +407,36 @@ export const LEVEL = {
         const autonomy = game.MAX_AUTONOMY / game.AUTONOMY_MULTIPLIER
         if (data.distance >= autonomy) {
             level.return = undefined
-            if (LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)) {
-                level.scene.start(
-                    CST.SCENES.LEVEL,
-                    UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++])
-                )
-            } else {
-                LEVELCONFIG.NEXT = 1
-                level.scene.start(CST.SCENES.LOAD)
-            }
+            const hasNextLevel = LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)
+            const nextScene = hasNextLevel ? UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT]) : undefined
+            level.scene.launch(
+                CST.SCENES.MODAL_EOL,
+                {
+                    maps: [level.visual.map_place, level.visual.map_directions],
+                    content: {
+                        level: {
+                            dist: data.distance
+                        },
+                        parent: level,
+                        hasNextLevel,
+                        next: nextScene,
+                    }
+                }
+            )
+            // if (LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)) {
+            //     level.scene.start(
+            //         CST.SCENES.LEVEL,
+            //         UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++])
+            //     )
+            // } else {
+            //     LEVELCONFIG.NEXT = 1
+            //     level.scene.start(CST.SCENES.LOAD)
+            // }
             return
         }
 
         if (data.route.length === 0) {
+            console.log('FAILED:', data.distance, autonomy, game.ACTIVE_POWERUPS)
             level.return = undefined
             this.resetRouteBar(level)
             return

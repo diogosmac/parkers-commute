@@ -7,25 +7,30 @@ export const CST = {
         CREDITS: 'CREDITS',
         MODAL: 'MODAL',
         MODAL_T: 'MODAL_TRANSITION',
-        MULTIMODAL: 'MULTIMODAL'
+        MULTIMODAL: 'MULTIMODAL',
+        MODAL_EOL: 'MODAL_END_OF_LEVEL'
     },
     STYLES: {
         BATTERY_PERCENTAGE: {
-            font: 'bold 16px Roboto',
+            font: '500 16px Roboto',
             fill: '#fff',
         },
         DEST_USES: {
-            font: 'bold 16px Roboto',
+            font: '500 16px Roboto',
             fill: '#fff',
         },
         FLAVOR_SMALL: {
-            font: 'bold 18px Roboto',
+            font: '500 18px Roboto',
             fill: '#fff',
         },
         FLAVOR_LARGE: {
-            font: 'bold 32px Roboto',
+            font: '500 32px Roboto',
             fill: '#fff',
-        }
+        },
+        END_OF_LEVEL: {
+            font: '500 24px Roboto',
+            fill: '#202020',
+        },
     },
     DEST: {
         HOME: 'level_dest_home',
@@ -140,10 +145,18 @@ export const CST = {
         TUTORIAL_1: 'modals_tutorial_1',
         TUTORIAL_2: 'modals_tutorial_2',
         TUTORIAL_3: 'modals_tutorial_3',
+        POWERUPS_1: 'modals_powerups_1',
+        POWERUPS_2: 'modals_powerups_2',
+        POWERUPS_3: 'modals_powerups_3',
+        NOMOREHELP: 'modals_nomorehelp',
+        EOL: 'modals_end-of-level',
         NAV_L: 'modals_nav_l',
         NAV_R: 'modals_nav_r',
         BTN_INTRO: 'modals_btn_letsgo',
         BTN_TUTORIAL: 'modals_btn_gotit',
-        BTN_IMREADY: 'modals_btn_imready',
+        BTN_POWERUPS: 'modals_btn_imready',
+        BTN_NOMOREHELP: 'modals_btn_nomorehelp',
+        BTN_EOL_BACK: 'modals_btn_eol_back',
+        BTN_EOL_ADVANCE: 'modals_btn_eol_advance',
     },
 }

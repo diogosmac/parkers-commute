@@ -9,5 +9,9 @@ export const UTILS = {
             return true
         }
         return false
-    }
+    },
+    roundToDecimals(n, digits) {
+        const power_of_ten = 10**digits
+        return Math.round(n * power_of_ten) / power_of_ten
+    },
 }

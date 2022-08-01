@@ -3,7 +3,7 @@ import { CST } from './CST'
 import { LEVEL } from './Level'
 
 export const LEVELCONFIG = {
-    NEXT: 2,
+    NEXT: 1,
 
     // DATA: flavor data for the level
     // GAMEPLAY: gameplay elements for the level
@@ -48,9 +48,70 @@ export const LEVELCONFIG = {
                     },
                 ],
             },
-            DESIRED_ROUTE: ['Home', 'Work', 'Home']
+            DESIRED_ROUTE: ['Home', 'Work', 'Home'],
+            script_key: 1,
+            script: function (l) {
+                LEVEL.launchModal(l, {
+                    text: [CST.MODALS.TUTORIAL_1, CST.MODALS.TUTORIAL_2, CST.MODALS.TUTORIAL_3],
+                    btn: CST.MODALS.BTN_TUTORIAL
+                })
+            }
         },
         2: {
+            DATA: {
+                WEATHER: CST.WEATHER.REGULAR,
+            },
+            GAMEPLAY: {
+                current_battery: '0%',
+                next_route: 1,
+                selected_route: null,
+                destinations: {
+                    'Home': {
+                        icon: CST.DEST.HOME,
+                        icon_out: CST.DEST.HOME_OUT,
+                        route: CST.LEVEL.ROUTE.HOME,
+                        uses: 1,
+                        screen_position: {
+                            x: 282,
+                            y: 23
+                        },
+                        map_url: CONFIG.LOCATIONS.HOME,
+                    },
+                    'Supermarket': {
+                        icon: CST.DEST.SUPERMARKET,
+                        icon_out: CST.DEST.SUPERMARKET_OUT,
+                        route: CST.LEVEL.ROUTE.SUPERMARKET,
+                        uses: 1,
+                        screen_position: {
+                            x: 373.18, // 282 + 91.18
+                            y: 23
+                        },
+                        map_url: CONFIG.LOCATIONS.SUPERMARKET,
+                    },
+
+                },
+                routes: [
+                    {
+                        name: 'Home',
+                        icon: CST.LEVEL.ROUTE.HOME,
+                    },
+                ],
+                powerups: [
+                    'Cold',
+                    'Heating',
+                ]
+            },
+            DESIRED_ROUTE: ['Home', 'Supermarket', 'Home'],
+            DESIRED_POWERUPS: ['Cold', 'Heating'],
+            script_key: 2,
+            script: function (l) {
+                LEVEL.launchModal(l, {
+                    text: [CST.MODALS.POWERUPS_1, CST.MODALS.POWERUPS_2, CST.MODALS.POWERUPS_3],
+                    btn: CST.MODALS.BTN_POWERUPS
+                })
+            }
+        },
+        3: {
             DATA: {
                 WEATHER: CST.WEATHER.REGULAR,
             },
@@ -101,19 +162,17 @@ export const LEVELCONFIG = {
                 powerups: [
                     'Hot',
                     'Cooling',
-                    // 'Cold',
-                    // 'Heating',
                     'Double-Time',
                     'Power-Down',
                 ]
             },
             DESIRED_ROUTE: ['Home', 'Work', 'Home', 'Supermarket', 'Home'],
             DESIRED_POWERUPS: ['Hot', 'Cooling', 'Double-Time', 'Power-Down'],
-            script_key: 2,
+            script_key: 3,
             script: function (l) {
                 LEVEL.launchModal(l, {
-                    text: [CST.MODALS.TUTORIAL_1, CST.MODALS.TUTORIAL_2, CST.MODALS.TUTORIAL_3],
-                    btn: CST.MODALS.BTN_TUTORIAL
+                    text: CST.MODALS.NOMOREHELP,
+                    btn: CST.MODALS.BTN_NOMOREHELP
                 })
             }
         }
