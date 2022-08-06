@@ -4,6 +4,7 @@ import { LevelScene } from './scenes/LevelScene';
 import { LoadScene } from './scenes/LoadScene'
 import { MenuScene } from './scenes/MenuScene'
 import { ModalEndOfLevelScene } from './scenes/ModalEndOfLevelScene';
+import { ModalGameOverScene } from './scenes/ModalGameOverScene';
 import { ModalScene } from './scenes/ModalScene';
 import { ModalTransitionScene } from './scenes/ModalTransitionScene';
 
@@ -18,6 +19,7 @@ let game = new Phaser.Game({
         CreditsScene,
         ModalScene,
         ModalTransitionScene,
-        ModalEndOfLevelScene
+        ModalEndOfLevelScene,
+        ModalGameOverScene
     ]
 });

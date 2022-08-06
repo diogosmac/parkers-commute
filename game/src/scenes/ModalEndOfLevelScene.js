@@ -88,7 +88,7 @@ export class ModalEndOfLevelScene extends Phaser.Scene {
                 this.scene.start(CST.SCENES.LEVEL, this.nextScene)
             } else {
                 LEVELCONFIG.NEXT = 1
-                this.scene.start(CST.SCENES.LOAD)
+                this.scene.start(CST.SCENES.MODAL_GAMEOVER)
             }
         })
 

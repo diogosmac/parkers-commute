@@ -93,6 +93,7 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.MODALS.POWERUPS_3, 'modals/3_powerups_3-3.png')
         this.load.image(CST.MODALS.NOMOREHELP, 'modals/4_no-more-help.png')
         this.load.image(CST.MODALS.EOL, 'modals/5_end-of-level.png')
+        this.load.image(CST.MODALS.GAMEOVER, 'modals/6_end-of-game.png')
         this.load.image(CST.MODALS.NAV_L, 'modals/button_left.png')
         this.load.image(CST.MODALS.NAV_R, 'modals/button_right.png')
         this.load.image(CST.MODALS.BTN_INTRO, 'modals/button_lets-go.png')
@@ -101,6 +102,7 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.MODALS.BTN_NOMOREHELP, 'modals/button_thumbs-up.png')
         this.load.image(CST.MODALS.BTN_EOL_BACK, 'modals/button_level-repeat.png')
         this.load.image(CST.MODALS.BTN_EOL_ADVANCE, 'modals/button_level-advance.png')
+        this.load.image(CST.MODALS.BTN_MAINMENU, 'modals/button_main-menu.png')
 
         /*
             @@@ JUST IN CASE @@@

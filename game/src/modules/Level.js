@@ -152,7 +152,7 @@ export const LEVEL = {
     },
 
     checkPowerups(level) {
-        for (const name of level.GAMEPLAY.powerups.slice(0,4)) {
+        for (const name of level.GAMEPLAY.powerups.slice(0, 4)) {
             let hasRequirements = true
             if (!POWERUPS[name].hasOwnProperty('requires')) {
                 level.visual.disabled_powerups[name].setVisible(false)
@@ -197,7 +197,7 @@ export const LEVEL = {
         level.tweens.add({
             targets: [route_bar, battery_bar],
             // displayWidth: route_target,
-            displayWidth: function(target, targetKey, value, targetIndex, totalTargets, tween) {
+            displayWidth: function (target, targetKey, value, targetIndex, totalTargets, tween) {
                 switch (targetIndex) {
                     case 0:
                         return route_target
@@ -405,6 +405,7 @@ export const LEVEL = {
         const game = level.GAMEPLAY
 
         const autonomy = game.MAX_AUTONOMY / game.AUTONOMY_MULTIPLIER
+
         if (data.distance >= autonomy) {
             level.return = undefined
             const hasNextLevel = LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)
@@ -423,15 +424,6 @@ export const LEVEL = {
                     }
                 }
             )
-            // if (LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)) {
-            //     level.scene.start(
-            //         CST.SCENES.LEVEL,
-            //         UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT++])
-            //     )
-            // } else {
-            //     LEVELCONFIG.NEXT = 1
-            //     level.scene.start(CST.SCENES.LOAD)
-            // }
             return
         }
 
@@ -467,10 +459,10 @@ export const LEVEL = {
         let base = 'http://' + CONFIG.API_URL + '/get_directions'
         let pref = '?mode=driving&units=metric'
         let orig = '&origin=' + waypoints[0]
-        let dest = '&destination=' + waypoints[waypoints.length-1]
+        let dest = '&destination=' + waypoints[waypoints.length - 1]
         let url = base + pref + orig + dest
         if (waypoints.length > 2) {
-            let wayp = '&waypoints=' + waypoints.slice(1, waypoints.length-1).join('|')
+            let wayp = '&waypoints=' + waypoints.slice(1, waypoints.length - 1).join('|')
             url += wayp
         }
         return url
@@ -495,10 +487,10 @@ export const LEVEL = {
         } else {
             let pref = '&mode=driving&units=metric'
             let orig = '&origin=' + waypoints[0]
-            let dest = '&destination=' + waypoints[waypoints.length-1]
+            let dest = '&destination=' + waypoints[waypoints.length - 1]
             let params = pref + orig + dest
             if (waypoints.length > 2) {
-                let wayp = '&waypoints=' + waypoints.slice(1, waypoints.length-1).join('|')
+                let wayp = '&waypoints=' + waypoints.slice(1, waypoints.length - 1).join('|')
                 params += wayp
             }
             let url = base + mode + api + params

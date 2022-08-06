@@ -3,7 +3,7 @@ import { CST } from './CST'
 import { LEVEL } from './Level'
 
 export const LEVELCONFIG = {
-    NEXT: 1,
+    NEXT: 2,
 
     // DATA: flavor data for the level
     // GAMEPLAY: gameplay elements for the level

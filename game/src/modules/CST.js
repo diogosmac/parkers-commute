@@ -8,7 +8,8 @@ export const CST = {
         MODAL: 'MODAL',
         MODAL_T: 'MODAL_TRANSITION',
         MULTIMODAL: 'MULTIMODAL',
-        MODAL_EOL: 'MODAL_END_OF_LEVEL'
+        MODAL_EOL: 'MODAL_END_OF_LEVEL',
+        MODAL_GAMEOVER: 'MODAL_GAMEOVER',
     },
     STYLES: {
         BATTERY_PERCENTAGE: {
@@ -150,6 +151,7 @@ export const CST = {
         POWERUPS_3: 'modals_powerups_3',
         NOMOREHELP: 'modals_nomorehelp',
         EOL: 'modals_end-of-level',
+        GAMEOVER: 'modals_end-of-game',
         NAV_L: 'modals_nav_l',
         NAV_R: 'modals_nav_r',
         BTN_INTRO: 'modals_btn_letsgo',
@@ -158,5 +160,6 @@ export const CST = {
         BTN_NOMOREHELP: 'modals_btn_nomorehelp',
         BTN_EOL_BACK: 'modals_btn_eol_back',
         BTN_EOL_ADVANCE: 'modals_btn_eol_advance',
+        BTN_MAINMENU: 'modals_btn_mainmenu',
     },
 }
