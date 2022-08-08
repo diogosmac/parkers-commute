@@ -128,15 +128,6 @@ export const CST = {
             TEMP: 29,
         },
     },
-    CALC: {
-        BASE: 376.59,
-        FACTOR: {
-            CHILL: 1.15,
-            COLD: 1.5,
-            HOT: 1.15,
-            WARM: 1.05,
-        },
-    },
     ANIM: {
         DURATION: 1000
     },
@@ -151,7 +142,8 @@ export const CST = {
         POWERUPS_3: 'modals_powerups_3',
         NOMOREHELP: 'modals_nomorehelp',
         EOL: 'modals_end-of-level',
-        GAMEOVER: 'modals_end-of-game',
+        GAMEOVER_1: 'modals_end-of-game_1',
+        GAMEOVER_2: 'modals_end-of-game_2',
         NAV_L: 'modals_nav_l',
         NAV_R: 'modals_nav_r',
         BTN_INTRO: 'modals_btn_letsgo',
@@ -161,5 +153,11 @@ export const CST = {
         BTN_EOL_BACK: 'modals_btn_eol_back',
         BTN_EOL_ADVANCE: 'modals_btn_eol_advance',
         BTN_MAINMENU: 'modals_btn_mainmenu',
+    },
+    CALC: {
+        BASE: 376.59,
+        PREDICTED_DIST_TO_EMISSIONS: 95,
+        PREDICTED_DIST_TO_FUEL: 8 / 100,
+        PREDICTED_FUEL_TO_MONEY: 2,
     },
 }

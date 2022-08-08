@@ -34,14 +34,10 @@ export class ModalEndOfLevelScene extends Phaser.Scene {
 
         this.add.image(53, 45, CST.MODALS.EOL).setOrigin(0).setDepth(1)
 
-        const PREDICTED_DIST_TO_EMISSIONS = 95
-        const PREDICTED_DIST_TO_FUEL = 8 / 100
-        const PREDICTED_FUEL_TO_MONEY = 2
-
         const distance = UTILS.roundToDecimals(this.page_content.dist / 1000, 1)
-        const grams = UTILS.roundToDecimals(PREDICTED_DIST_TO_EMISSIONS * distance, 0)
-        const fuel = UTILS.roundToDecimals(PREDICTED_DIST_TO_FUEL * distance, 2)
-        const money = UTILS.roundToDecimals(PREDICTED_FUEL_TO_MONEY * fuel, 2)
+        const grams = UTILS.roundToDecimals(CST.CALC.PREDICTED_DIST_TO_EMISSIONS * distance, 0)
+        const fuel = UTILS.roundToDecimals(CST.CALC.PREDICTED_DIST_TO_FUEL * distance, 2)
+        const money = UTILS.roundToDecimals(CST.CALC.PREDICTED_FUEL_TO_MONEY * fuel, 2)
 
         this.add.text(
             154, 169,
@@ -83,6 +79,7 @@ export class ModalEndOfLevelScene extends Phaser.Scene {
         btn_advance.setInteractive()
         btn_advance.on(CST.MOUSE.CLICK_RELEASE, () => {
             this.parentScene.scene.stop()
+            LEVEL.accumulated_distance += this.page_content.dist
             if (this.hasNextLevel) {
                 LEVELCONFIG.NEXT++
                 this.scene.start(CST.SCENES.LEVEL, this.nextScene)

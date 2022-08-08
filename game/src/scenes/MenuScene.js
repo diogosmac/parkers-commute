@@ -1,4 +1,5 @@
 import { CST } from '../modules/CST'
+import { LEVEL } from '../modules/Level'
 import { LEVELCONFIG } from '../modules/LevelConfig'
 import { UTILS } from '../modules/Utils'
 
@@ -61,6 +62,9 @@ export class MenuScene extends Phaser.Scene {
             for (const level of Object.values(LEVELCONFIG.LEVELS)) {
                 if (!level.hasOwnProperty('MAX_AUTONOMY')) return
             }
+
+            LEVEL.accumulated_distance = 0
+
             // if it passes the check, the player may start
             this.scene.launch(
                 CST.SCENES.MODAL_T,
