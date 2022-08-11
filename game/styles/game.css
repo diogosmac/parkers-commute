@@ -1,15 +1,22 @@
+body {
+    background: #222;
+}
+
 canvas {
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
     z-index: 0;
 }
 
 .google-maps {
     display: none;
-    position: relative;
-    top: 136px;
-    left: 53px;
+    position: absolute;
+    top: calc(50vh - 300px + 136px);
+    left: calc(50vw - 400px + 53px);
 }
 
 #gm-place {
@@ -23,8 +30,11 @@ canvas {
 #overlay {
     z-index: 3;
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
     width: 800px;
     height: 600px;
     background-color: rgba(0, 0, 0, 0.6);

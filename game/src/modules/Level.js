@@ -406,7 +406,7 @@ export const LEVEL = {
 
         const autonomy = game.MAX_AUTONOMY / game.AUTONOMY_MULTIPLIER
 
-        if (data.distance >= autonomy) {
+        if (Math.round(data.distance * 100) >= Math.round(autonomy * 100)) {
             level.return = undefined
             const hasNextLevel = LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)
             const nextScene = hasNextLevel ? UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT]) : undefined

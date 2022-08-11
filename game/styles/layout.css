@@ -1,0 +1,118 @@
+:root {
+    --form-side-margin: 30px;
+    --center-width: 800px;
+}
+
+body {
+    background: #222;
+    color: white;
+    margin: 0;
+}
+
+a {
+    color: white !important;
+}
+
+a:hover {
+    font-weight: 900 !important;
+}
+
+#page {
+    width: 100vw;
+    height: 100vh;
+}
+
+script {
+    display: none !important;
+}
+
+#center-form,
+#pre,
+#post {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+#pre,
+#post {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    margin: 10px;
+}
+
+#pre {
+    right: calc(50vw + 400px);
+}
+
+#post {
+    left: calc(50vw + 400px);
+}
+
+#page #pre,
+#page #post {
+    margin: 30px;
+}
+
+* {
+    font: 500 16px Roboto;
+}
+
+p,
+a {
+    line-height: 2em !important;
+}
+
+#page #center-form {
+    left: 0;
+    right: 0;
+    height: calc(100vh - 8px);
+    background: #cbf7ea;
+    width: var(--center-width);
+}
+
+.form-wrap {
+    background: #222 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form {
+    position: absolute;
+    left: var(--form-side-margin);
+    right: var(--form-side-margin);
+    margin: auto;
+    width: var(--center-width);
+    display: grid;
+    grid-template-columns: auto repeat(4, 1fr);
+    margin: auto 0;
+}
+
+.form .tag {
+    grid-column: 1;
+    margin: 0;
+    margin-right: 1em;
+}
+
+.form input {
+    grid-column: 2 / 6;
+}
+
+.form .description {
+    line-height: 1em !important;
+    font-size: 14px;
+    font-weight: normal;
+    grid-column: 1 / 6;
+}
+
+.form .description-big {
+    grid-column: 1 / 6;
+    font-size: 18px;
+}
