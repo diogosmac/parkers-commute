@@ -40,8 +40,8 @@ For more information regarding the organization of this Thesis, you can visit th
 
 To run, you need an application bundler to wrap everything together. In my case, I used **Parcel**, which is available on **Node.js**.
 1. You need to have `node.js` installed on your computer.
-2. Open your terminal, and run `npm install` in the `game` and `server` directories, in order to install the project dependencies.
-3. You need to run the script at `server/index.js`, in order to have access to the proxy server that allows making calls to APIs with stricter CORS policies. I personally do this by running `node server/index.js &`, to run the server in "dettached" mode, but you can run it on a separate window if you prefer to see the output by itself.
+2. Open your terminal, and run `npm ci` in the `game` and `server` directories, in order to install the project dependencies.
+3. You need to run the script at `server/index.js`, in order to have access to the proxy server that allows making calls to APIs with stricter CORS policies. This script is run by running `npm start` on the terminal, from the `server` directory.
 4. Run the program by running `npm start` on the terminal, from the `game` directory. Alternatively, you can run `npx parcel index.html`, to run manually. If you do this, you can specify the port by adding `-p <port-number>` to the command. The default port is `1234`.
 
 The game will then be available at `localhost:<port-number>` (this link is shown in the prompt on the terminal)!

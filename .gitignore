@@ -3,7 +3,7 @@
 */node_modules
 game/.cache
 game/.parcel-cache
-game/src/modules/config.js
+game/.env
 game/dist/*
 !game/dist/assets
 server/.env
