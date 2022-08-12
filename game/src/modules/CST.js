@@ -40,6 +40,8 @@ export const CST = {
         WORK_OUT: 'level_dest_work_out',
         SUPERMARKET: 'level_dest_supermarket',
         SUPERMARKET_OUT: 'level_dest_supermarket_out',
+        GYM: 'level_dest_gym',
+        GYM_OUT: 'level_dest_gym_out',
         SELECTED: 'level_dest_selected',
     },
     LEVEL: {
@@ -57,6 +59,7 @@ export const CST = {
             HOME: 'level_route_home',
             WORK: 'level_route_work',
             SUPERMARKET: 'level_route_supermarket',
+            GYM: 'level_route_gym',
         },
         GO: {
             UNUSABLE: 'level_go_unusable',
@@ -144,6 +147,7 @@ export const CST = {
         EOL: 'modals_end-of-level',
         GAMEOVER_1: 'modals_end-of-game_1',
         GAMEOVER_2: 'modals_end-of-game_2',
+        LEVEL_FAILED: 'modals_level-failed',
         NAV_L: 'modals_nav_l',
         NAV_R: 'modals_nav_r',
         BTN_INTRO: 'modals_btn_letsgo',
@@ -153,11 +157,13 @@ export const CST = {
         BTN_EOL_BACK: 'modals_btn_eol_back',
         BTN_EOL_ADVANCE: 'modals_btn_eol_advance',
         BTN_MAINMENU: 'modals_btn_mainmenu',
+        BTN_TRYAGAIN: 'modals_btn_tryagain'
     },
     CALC: {
         BASE: 376.59,
         PREDICTED_DIST_TO_EMISSIONS: 95,
         PREDICTED_DIST_TO_FUEL: 8 / 100,
         PREDICTED_FUEL_TO_MONEY: 2,
+        MARGIN: 0.01
     },
 }

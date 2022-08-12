@@ -17,12 +17,14 @@ export class DeferredScene extends Phaser.Scene {
         switch (this.type) {
             case REQUESTS.INIT:
                 for (const [i, v] of Object.entries(this.url)) {
-                    fetch(v)
-                        .then(response => response.json())
-                        .then((data) => {
-                            this.data[i].return = data
-                            LEVEL.processInitCall(this.data[i])
-                        })
+                    for (const url of v) {
+                        fetch(url)
+                            .then(response => response.json())
+                            .then((data) => {
+                                this.data[i].return = data
+                                LEVEL.processInitCall(this.data[i])
+                            })
+                    }
                 }
                 break
             case REQUESTS.CHECK:

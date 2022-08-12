@@ -366,12 +366,41 @@ export const LEVEL = {
         let multiplier = 1
         if (level.hasOwnProperty('DESIRED_POWERUPS')) {
             for (const p of level.DESIRED_POWERUPS) {
-                multiplier *= POWERUPS[p].multiplier
+                if (level.GAMEPLAY.powerups.includes(p)) {
+                    multiplier *= POWERUPS[p].multiplier
+                }
             }
         }
 
-        level.MAX_AUTONOMY = distance * multiplier
-        level.DATA.max_battery_dec = (level.MAX_AUTONOMY / 1000) / CST.CALC.BASE
+        let calc_autonomy = distance * multiplier
+        let calc_battery = (calc_autonomy / 1000) / CST.CALC.BASE
+
+        if (level.DATA.hasOwnProperty('calculated_autonomy')) {
+            if (calc_autonomy <= level.DATA.calculated_autonomy) {
+                level.return = undefined
+                delete level.return
+            }
+        }
+
+        level.DATA.calculated_autonomy = calc_autonomy
+
+        if (calc_battery > 1) {
+            UTILS.arrayRemove(level.GAMEPLAY.powerups, 'Power-Down')
+            if (UTILS.arrayRemove(level.DESIRED_POWERUPS, 'Power-Down')) {
+                multiplier /= POWERUPS['Power-Down'].multiplier
+                calc_autonomy = distance * multiplier
+                calc_battery = (calc_autonomy / 1000) / CST.CALC.BASE
+            }
+        }
+
+        if (level.DATA.hasOwnProperty('max_battery_dec')) {
+            if (level.DATA.max_battery_dec > calc_battery) {
+                
+            }
+        }
+
+        level.DATA.max_battery_dec = Math.min(1, calc_battery)
+        level.MAX_AUTONOMY = CST.CALC.BASE * 1000 * level.DATA.max_battery_dec
         level.DATA.max_battery = Math.round(level.DATA.max_battery_dec * 100)
 
         level.return = undefined
@@ -406,7 +435,9 @@ export const LEVEL = {
 
         const autonomy = game.MAX_AUTONOMY / game.AUTONOMY_MULTIPLIER
 
-        if (Math.round(data.distance * 100) >= Math.round(autonomy * 100)) {
+        const diff = autonomy - data.distance
+
+        if (diff <= CST.CALC.MARGIN) {
             level.return = undefined
             const hasNextLevel = LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)
             const nextScene = hasNextLevel ? UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT]) : undefined
@@ -429,6 +460,10 @@ export const LEVEL = {
 
         if (data.route.length === 0) {
             console.log('FAILED:', data.distance, autonomy, game.ACTIVE_POWERUPS)
+            this.launchModal(level, {
+                text: CST.MODALS.LEVEL_FAILED,
+                btn: CST.MODALS.BTN_TRYAGAIN
+            })
             level.return = undefined
             this.resetRouteBar(level)
             return

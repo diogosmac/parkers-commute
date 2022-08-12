@@ -59,6 +59,8 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.DEST.WORK_OUT, 'level/dest/work_out.png')
         this.load.image(CST.DEST.SUPERMARKET, 'level/dest/supermarket.png')
         this.load.image(CST.DEST.SUPERMARKET_OUT, 'level/dest/supermarket_out.png')
+        this.load.image(CST.DEST.GYM, 'level/dest/gym.png')
+        this.load.image(CST.DEST.GYM_OUT, 'level/dest/gym_out.png')
 
         // // // routes
         this.load.image(CST.LEVEL.ROUTE.OPEN, 'level/routes/open.png')
@@ -68,6 +70,7 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.LEVEL.ROUTE.HOME, 'level/routes/home.png')
         this.load.image(CST.LEVEL.ROUTE.WORK, 'level/routes/work.png')
         this.load.image(CST.LEVEL.ROUTE.SUPERMARKET, 'level/routes/supermarket.png')
+        this.load.image(CST.LEVEL.ROUTE.GYM, 'level/routes/gym.png')
 
         // // // battery bar
         this.load.image(CST.LEVEL.BATTERY.FULL, 'level/battery_full_bar.png')
@@ -95,6 +98,7 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.MODALS.EOL, 'modals/5_end-of-level.png')
         this.load.image(CST.MODALS.GAMEOVER_1, 'modals/6_end-of-game_1-2.png')
         this.load.image(CST.MODALS.GAMEOVER_2, 'modals/6_end-of-game_2-2.png')
+        this.load.image(CST.MODALS.LEVEL_FAILED, 'modals/7_level-failed.png')
         this.load.image(CST.MODALS.NAV_L, 'modals/button_left.png')
         this.load.image(CST.MODALS.NAV_R, 'modals/button_right.png')
         this.load.image(CST.MODALS.BTN_INTRO, 'modals/button_lets-go.png')
@@ -104,6 +108,7 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.MODALS.BTN_EOL_BACK, 'modals/button_level-repeat.png')
         this.load.image(CST.MODALS.BTN_EOL_ADVANCE, 'modals/button_level-advance.png')
         this.load.image(CST.MODALS.BTN_MAINMENU, 'modals/button_main-menu.png')
+        this.load.image(CST.MODALS.BTN_TRYAGAIN, 'modals/button_try-again.png')
 
         /*
             @@@ JUST IN CASE @@@
@@ -115,12 +120,15 @@ export class LoadScene extends Phaser.Scene {
 
         const urls = {}
         for (const [i, level] of Object.entries(LEVELCONFIG.LEVELS)) {
-            const waypoints = level.DESIRED_ROUTE.map(
-                x => level.GAMEPLAY.destinations[x].map_url
-            )
-            if (waypoints.length < 2) return
-            const url = LEVEL.makeUrlFromWaypoints(waypoints)
-            urls[i] = url
+            urls[i] = []
+            for (const r of level.DESIRED_ROUTES) {
+                const waypoints = r.map(
+                    x => level.GAMEPLAY.destinations[x].map_url
+                )
+                if (waypoints.length < 2) continue
+                const url = LEVEL.makeUrlFromWaypoints(waypoints)
+                urls[i].push(url)
+            }
         }
         this.scene.launch(CST.SCENES.DEFER, {
             type: REQUESTS.INIT,
