@@ -1,10 +1,13 @@
 :root {
     --form-side-margin: 30px;
     --center-width: 800px;
+    --background: #222;
+    --diff-background: #151515;
+    --light-background: #cbf7ea;
 }
 
 body {
-    background: #222;
+    background: var(--background);
     color: white;
     margin: 0;
 }
@@ -73,15 +76,18 @@ a {
     left: 0;
     right: 0;
     height: calc(100vh - 8px);
-    background: #cbf7ea;
+    background: var(--light-background);
     width: var(--center-width);
 }
 
 .form-wrap {
-    background: #222 !important;
+    background: var(--diff-background) !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 0 2em;
+    border-left: solid 2px white;
+    border-right: solid 2px white;
 }
 
 .form {

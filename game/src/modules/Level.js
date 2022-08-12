@@ -350,7 +350,7 @@ export const LEVEL = {
         return goButton
     },
 
-    processInitCall(level) {
+    processInitCall(level, url) {
         const response = level.return
         if (response.status !== 'OK') {
             level.return = undefined

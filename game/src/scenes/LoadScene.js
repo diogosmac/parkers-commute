@@ -99,6 +99,7 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.MODALS.GAMEOVER_1, 'modals/6_end-of-game_1-2.png')
         this.load.image(CST.MODALS.GAMEOVER_2, 'modals/6_end-of-game_2-2.png')
         this.load.image(CST.MODALS.LEVEL_FAILED, 'modals/7_level-failed.png')
+        this.load.image(CST.MODALS.WAIT_LOAD, 'modals/8_wait-load.png')
         this.load.image(CST.MODALS.NAV_L, 'modals/button_left.png')
         this.load.image(CST.MODALS.NAV_R, 'modals/button_right.png')
         this.load.image(CST.MODALS.BTN_INTRO, 'modals/button_lets-go.png')
@@ -109,6 +110,7 @@ export class LoadScene extends Phaser.Scene {
         this.load.image(CST.MODALS.BTN_EOL_ADVANCE, 'modals/button_level-advance.png')
         this.load.image(CST.MODALS.BTN_MAINMENU, 'modals/button_main-menu.png')
         this.load.image(CST.MODALS.BTN_TRYAGAIN, 'modals/button_try-again.png')
+        this.load.image(CST.MODALS.BTN_FINE, 'modals/button_fine.png')
 
         /*
             @@@ JUST IN CASE @@@
@@ -130,12 +132,12 @@ export class LoadScene extends Phaser.Scene {
                 urls[i].push(url)
             }
         }
+        console.log('urls', urls)
         this.scene.launch(CST.SCENES.DEFER, {
             type: REQUESTS.INIT,
             data: LEVELCONFIG.LEVELS,
             url: urls,
         })
-
     }
     create() {
         this.scene.start(CST.SCENES.MENU)

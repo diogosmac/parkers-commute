@@ -31,10 +31,9 @@ http.createServer(function (req, res) {
         axios.get(url)
             .then(response => {
                 let data = response.data
-                data.status = 'OK'
                 res.write(JSON.stringify(data))
                 res.end()
-                console.log('Response: SUCCESS')
+                console.log(`Response: ${data.status}`)
             })
             .catch(error => {
                 res.write(JSON.stringify(error))

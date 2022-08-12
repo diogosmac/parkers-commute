@@ -60,7 +60,19 @@ export class MenuScene extends Phaser.Scene {
             // only allows playing once all of
             // the levels have been calculated
             for (const level of Object.values(LEVELCONFIG.LEVELS)) {
-                if (!level.hasOwnProperty('MAX_AUTONOMY')) return
+                if (!level.hasOwnProperty('MAX_AUTONOMY')) {
+                    this.scene.launch(
+                        CST.SCENES.MODAL,
+                        {
+                            maps: [],
+                            content: {
+                                text: CST.MODALS.WAIT_LOAD,
+                                btn: CST.MODALS.BTN_FINE
+                            }
+                        }
+                    )
+                    return
+                }
             }
 
             LEVEL.accumulated_distance = 0

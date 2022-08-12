@@ -22,7 +22,7 @@ export class DeferredScene extends Phaser.Scene {
                             .then(response => response.json())
                             .then((data) => {
                                 this.data[i].return = data
-                                LEVEL.processInitCall(this.data[i])
+                                LEVEL.processInitCall(this.data[i], url)
                             })
                     }
                 }
