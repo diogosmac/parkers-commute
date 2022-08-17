@@ -2,42 +2,91 @@ body {
     background: #222;
 }
 
-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    z-index: 0;
-    border: solid 10px #333;
+@media (max-width: 1383px) and (min-width: 800px) {
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    #pre {
+        order: 1;
+    }
+    canvas {
+        order: 2;
+        width: 800;
+        height: 600;
+        border: solid 10px #333;
+        margin: 0 calc(50vw - 400px - 10px);
+    }
+    #post {
+        order: 3;
+    }
+    .google-maps {
+        display: none;
+        position: absolute;
+        top: calc(50vh - 300px + 136px + 48px);
+        left: calc(50vw - 400px + 53px);
+    }
+    #gm-place {
+        z-index: 1;
+    }
+
+    #gm-directions {
+        z-index: 2;
+    }
+
+    #overlay {
+        z-index: 3;
+        position: absolute;
+        top: 96px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        width: 800px;
+        height: 600px;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: none;
+    }
 }
 
-.google-maps {
-    display: none;
-    position: absolute;
-    top: calc(50vh - 300px + 136px);
-    left: calc(50vw - 400px + 53px);
-}
+@media (min-width: 1384px) {
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        z-index: 0;
+        border: solid 10px #333;
+    }
 
-#gm-place {
-    z-index: 1;
-}
+    .google-maps {
+        display: none;
+        position: absolute;
+        top: calc(50vh - 300px + 136px);
+        left: calc(50vw - 400px + 53px);
+    }
 
-#gm-directions {
-    z-index: 2;
-}
+    #gm-place {
+        z-index: 1;
+    }
 
-#overlay {
-    z-index: 3;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    width: 800px;
-    height: 600px;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: none;
+    #gm-directions {
+        z-index: 2;
+    }
+
+    #overlay {
+        z-index: 3;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        width: 800px;
+        height: 600px;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: none;
+    }
 }

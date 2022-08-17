@@ -19,6 +19,7 @@ export class LevelScene extends Phaser.Scene {
         this.GAMEPLAY.DIST_MULTIPLIER = 1
         this.GAMEPLAY.AUTONOMY_MULTIPLIER = 1
         this.GAMEPLAY.ACTIVE_POWERUPS = []
+        this.CLICKABLE = true
 
         if (data.hasOwnProperty('script_key')) {
             this.script = LEVELCONFIG.LEVELS[data.script_key].script

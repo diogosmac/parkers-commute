@@ -339,12 +339,15 @@ export const LEVEL = {
         goButton.setInteractive()
 
         goButton.on(CST.MOUSE.CLICK, () => {
-            let apiUrl = this.getDirectionsUrl(level)
-            level.scene.launch(CST.SCENES.DEFER, {
-                type: REQUESTS.CHECK,
-                data: level,
-                url: apiUrl
-            })
+            if (level.CLICKABLE) {
+                let apiUrl = this.getDirectionsUrl(level)
+                level.scene.launch(CST.SCENES.DEFER, {
+                    type: REQUESTS.CHECK,
+                    data: level,
+                    url: apiUrl
+                })
+                level.CLICKABLE = false
+            }
         })
 
         return goButton
@@ -466,6 +469,7 @@ export const LEVEL = {
             })
             level.return = undefined
             this.resetRouteBar(level)
+            level.CLICKABLE = true
             return
         }
 
