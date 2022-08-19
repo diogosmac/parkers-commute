@@ -132,7 +132,6 @@ export class LoadScene extends Phaser.Scene {
                 urls[i].push(url)
             }
         }
-        console.log('urls', urls)
         this.scene.launch(CST.SCENES.DEFER, {
             type: REQUESTS.INIT,
             data: LEVELCONFIG.LEVELS,

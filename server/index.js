@@ -4,6 +4,8 @@ const url = require('url')
 
 require('dotenv').config({ silent: true })
 
+const PORT = process.env.PORT || 3000
+
 const API_KEY = process.env.API_KEY
 const DIRECTIONS_API = 'https://maps.googleapis.com/maps/api/directions/json'
 
@@ -46,4 +48,4 @@ http.createServer(function (req, res) {
         res.write(JSON.stringify({ status: 'UNKNOWN REQUEST' }))
         res.end()
     }
-}).listen(9000)
+}).listen(PORT)

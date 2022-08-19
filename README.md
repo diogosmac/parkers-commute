@@ -41,7 +41,14 @@ For more information regarding the organization of this Thesis, you can visit th
 To run, you need an application bundler to wrap everything together. In my case, I used **Parcel**, which is available on **Node.js**.
 1. You need to have `node.js` installed on your computer.
 2. Open your terminal, and run `npm ci` in the `game` and `server` directories, in order to install the project dependencies.
-3. You need to run the script at `server/index.js`, in order to have access to the proxy server that allows making calls to APIs with stricter CORS policies. This script is run by running `npm start` on the terminal, from the `server` directory.
-4. Run the program by running `npm start` on the terminal, from the `game` directory. Alternatively, you can run `npx parcel index.html`, to run manually. If you do this, you can specify the port by adding `-p <port-number>` to the command. The default port is `1234`.
+3. On the `game` and `server` directories, you will need to create `.env` files to make the game work.
+   1. On the `server` directory, we use the variables:
+      - `API_KEY`: a valid key to the Google Maps API (you can generate one for free)
+      - `PORT`: the port where you want the server to run (default will be `3000`)
+   2. On the `game` directory, we use the variables:
+      - `API_KEY`: same API key that is needed in the `server` directory
+      - `API_URL`: the URL to which the API calls must be sent. This will usually be `http://localhost:<PORT>`, using the `PORT` value from the `server` configuration, but if you want you can use the production API at `https://parkers-commute-api.herokuapp.com`!
+4. In case you want to run the API locally, you need to run the script at `server/index.js`, in order to have access to the proxy server that allows making calls to APIs with stricter CORS policies. This script is run by running `npm start` on the terminal, from the `server` directory.
+5. Finally, run the program by running `npm start` on the terminal, from the `game` directory. Alternatively, you can run `npx parcel *.html`, to run manually. If you do this, you can specify the port by adding `-p <port-number>` to the command. The default port is `1234`.
 
 The game will then be available at `localhost:<port-number>` (this link is shown in the prompt on the terminal)!

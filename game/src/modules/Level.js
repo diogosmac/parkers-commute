@@ -441,6 +441,7 @@ export const LEVEL = {
         const diff = autonomy - data.distance
 
         if (diff <= CST.CALC.MARGIN) {
+            // console.log('PASSED:', data.distance, autonomy, game.ACTIVE_POWERUPS)
             level.return = undefined
             const hasNextLevel = LEVELCONFIG.LEVELS.hasOwnProperty(LEVELCONFIG.NEXT)
             const nextScene = hasNextLevel ? UTILS.copy(LEVELCONFIG.LEVELS[LEVELCONFIG.NEXT]) : undefined
@@ -462,7 +463,7 @@ export const LEVEL = {
         }
 
         if (data.route.length === 0) {
-            console.log('FAILED:', data.distance, autonomy, game.ACTIVE_POWERUPS)
+            // console.log('FAILED:', data.distance, autonomy, game.ACTIVE_POWERUPS)
             this.launchModal(level, {
                 text: CST.MODALS.LEVEL_FAILED,
                 btn: CST.MODALS.BTN_TRYAGAIN
@@ -495,7 +496,7 @@ export const LEVEL = {
     },
 
     makeUrlFromWaypoints(waypoints) {
-        let base = 'http://' + CONFIG.API_URL + '/get_directions'
+        let base = CONFIG.API_URL + '/get_directions'
         let pref = '?mode=driving&units=metric'
         let orig = '&origin=' + waypoints[0]
         let dest = '&destination=' + waypoints[waypoints.length - 1]
