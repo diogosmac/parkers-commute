@@ -163,9 +163,9 @@ export const CST = {
     },
     CALC: {
         BASE: 376.59,
-        PREDICTED_DIST_TO_EMISSIONS: 95,
-        PREDICTED_DIST_TO_FUEL: 8 / 100,
-        PREDICTED_FUEL_TO_MONEY: 2,
+        PREDICTED_DIST_TO_EMISSIONS: 122.3, // https://www.eea.europa.eu/data-and-maps/daviz/average-emissions-for-new-cars-7
+        PREDICTED_DIST_TO_FUEL: 7 / 100,    // https://www.iea.org/reports/fuel-consumption-of-cars-and-vans
+        PREDICTED_FUEL_TO_MONEY: 1.78,      // https://precoscombustiveis.dgeg.gov.pt/estatistica/preco-medio-diario/ - Visited: 19/08/2022
         MARGIN: 0.01
     },
 }
