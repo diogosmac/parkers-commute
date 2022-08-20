@@ -14,4 +14,23 @@ export const UTILS = {
         const power_of_ten = 10**digits
         return Math.round(n * power_of_ten) / power_of_ten
     },
+    reposition() {
+        const map_place = document.getElementById('gm-place')
+        const map_directions = document.getElementById('gm-directions')
+        const overlay = document.getElementById('overlay')
+    
+        const canvas = document.getElementsByTagName('canvas')[0]
+        const rect = canvas.getBoundingClientRect()
+    
+        overlay.style.left = (rect.left + 10) + 'px'
+        overlay.style.top = (rect.top + 10) + 'px'
+    
+        const map_left = (rect.left + 10 + 53) + 'px'
+        const map_top = (rect.top + 10 + 136) + 'px'
+    
+        map_place.style.left = map_left
+        map_place.style.top = map_top
+        map_directions.style.left = map_left
+        map_directions.style.top = map_top
+    },
 }

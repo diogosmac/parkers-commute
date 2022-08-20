@@ -73,6 +73,7 @@ export class ModalEndOfLevelScene extends Phaser.Scene {
             for (const m of this.maps) {
                 m.style.display = 'block'
             }
+            this.parentScene.CLICKABLE = true
             this.scene.stop()
         })
 

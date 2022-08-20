@@ -7,6 +7,7 @@ import { ModalEndOfLevelScene } from './scenes/ModalEndOfLevelScene';
 import { ModalGameOverScene } from './scenes/ModalGameOverScene';
 import { ModalScene } from './scenes/ModalScene';
 import { ModalTransitionScene } from './scenes/ModalTransitionScene';
+import { UTILS } from './modules/Utils'
 
 let game = new Phaser.Game({
     width: 800,
@@ -23,3 +24,6 @@ let game = new Phaser.Game({
         ModalGameOverScene
     ]
 });
+
+UTILS.reposition()
+window.addEventListener('resize', UTILS.reposition)
