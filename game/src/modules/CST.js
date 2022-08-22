@@ -168,4 +168,36 @@ export const CST = {
         PREDICTED_FUEL_TO_MONEY: 1.78,      // https://precoscombustiveis.dgeg.gov.pt/estatistica/preco-medio-diario/ - Visited: 19/08/2022
         MARGIN: 0.01
     },
+    POS: {
+        WEATHER: {
+            ICON: [53, 24],
+            HUMIDITY: {
+                ICON: [177, 64],
+                TEXT: [130 + 47/2, 59 + 35/2],
+            },
+            TEMPERATURE: {
+                ICON: [177, 29],
+                TEXT: [130 + 47/2, 24 + 35/2],
+            },
+        },
+        BATTERY: {
+            ICON: [53, 496],
+            TEXT: [105 + 67.55/2, 496 + 72/2],
+            BAR: [192, 513],
+            PERCENTAGE: [693.24 + 54.76/2, 513 + 37/2],
+        },
+        MAP: [142, 127],
+        POWERUPS: {
+            BAR: [52, 127],
+            X: 62.4,
+            Y: 137.4,
+            DELTA: 62.4,
+        },
+        ROUTE: {
+            BAR: [53, 437],
+            SLOT: [53, 409],
+            SLOT_GAP: 90,
+        },
+        GO: [593, 48],
+    }
 }

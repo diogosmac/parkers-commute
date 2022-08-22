@@ -25,8 +25,8 @@ export const UTILS = {
         overlay.style.left = (rect.left + 10) + 'px'
         overlay.style.top = (rect.top + 10) + 'px'
     
-        const map_left = (rect.left + 10 + 53) + 'px'
-        const map_top = (rect.top + 10 + 136) + 'px'
+        const map_left = (rect.left + 10 + 142) + 'px'
+        const map_top = (rect.top + 10 + 127) + 'px'
     
         map_place.style.left = map_left
         map_place.style.top = map_top

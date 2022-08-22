@@ -24,7 +24,7 @@ export const LEVELCONFIG = {
                         route: CST.LEVEL.ROUTE.HOME,
                         uses: 1,
                         screen_position: {
-                            x: 282,
+                            x: 253,
                             y: 23
                         },
                         map_url: CONFIG.LOCATIONS.HOME,
@@ -35,7 +35,7 @@ export const LEVELCONFIG = {
                         route: CST.LEVEL.ROUTE.SUPERMARKET,
                         uses: 1,
                         screen_position: {
-                            x: 373.18, // 282 + 91.18
+                            x: 253 + 91.18,
                             y: 23
                         },
                         map_url: CONFIG.LOCATIONS.SUPERMARKET,
@@ -74,7 +74,7 @@ export const LEVELCONFIG = {
                         route: CST.LEVEL.ROUTE.HOME,
                         uses: 1,
                         screen_position: {
-                            x: 282,
+                            x: 253,
                             y: 23
                         },
                         map_url: CONFIG.LOCATIONS.HOME,
@@ -85,7 +85,7 @@ export const LEVELCONFIG = {
                         route: CST.LEVEL.ROUTE.WORK,
                         uses: 1,
                         screen_position: {
-                            x: 373.18, // 282 + 91.18
+                            x: 253 + 91.18,
                             y: 23
                         },
                         map_url: CONFIG.LOCATIONS.WORK,
@@ -130,7 +130,7 @@ export const LEVELCONFIG = {
                         route: CST.LEVEL.ROUTE.HOME,
                         uses: 1,
                         screen_position: {
-                            x: 282,
+                            x: 253,
                             y: 23
                         },
                         map_url: CONFIG.LOCATIONS.HOME,
@@ -141,7 +141,7 @@ export const LEVELCONFIG = {
                         route: CST.LEVEL.ROUTE.SUPERMARKET,
                         uses: 1,
                         screen_position: {
-                            x: 373.18, // 282 + 91.18
+                            x: 253 + 91.18,
                             y: 23
                         },
                         map_url: CONFIG.LOCATIONS.SUPERMARKET,
@@ -152,7 +152,7 @@ export const LEVELCONFIG = {
                         route: CST.LEVEL.ROUTE.GYM,
                         uses: 1,
                         screen_position: {
-                            x: 464.36, // 282 + 91.18 * 2
+                            x: 253 + 91.18 * 2,
                             y: 23
                         },
                         map_url: CONFIG.LOCATIONS.GYM,
@@ -198,7 +198,7 @@ export const LEVELCONFIG = {
                         route: CST.LEVEL.ROUTE.HOME,
                         uses: 2,
                         screen_position: {
-                            x: 235,
+                            x: 219,
                             y: 23
                         },
                         map_url: CONFIG.LOCATIONS.HOME,
@@ -209,7 +209,7 @@ export const LEVELCONFIG = {
                         route: CST.LEVEL.ROUTE.WORK,
                         uses: 1,
                         screen_position: {
-                            x: 327.18, // 235 + 91.18
+                            x: 219 + 91.18,
                             y: 23
                         },
                         map_url: CONFIG.LOCATIONS.WORK,
@@ -220,7 +220,7 @@ export const LEVELCONFIG = {
                         route: CST.LEVEL.ROUTE.SUPERMARKET,
                         uses: 1,
                         screen_position: {
-                            x: 419.36, // 235 + 91.18 * 2
+                            x: 219 + 91.18 * 2,
                             y: 23
                         },
                         map_url: CONFIG.LOCATIONS.SUPERMARKET,
@@ -231,7 +231,7 @@ export const LEVELCONFIG = {
                         route: CST.LEVEL.ROUTE.GYM,
                         uses: 1,
                         screen_position: {
-                            x: 511.54, // 235 + 91.18 * 3
+                            x: 219 + 91.18 * 3,
                             y: 23
                         },
                         map_url: CONFIG.LOCATIONS.GYM,

@@ -39,7 +39,11 @@ const POWERUP_UTILS = {
             this.weather_icon.destroy()
         }
         l.visual.weather.setVisible(false)
-        this.weather_icon = l.add.image(53, 24, weather.ICON).setOrigin(0).setDepth(2)
+        this.weather_icon = l.add.image(
+            CST.POS.WEATHER.ICON[0],
+            CST.POS.WEATHER.ICON[1],
+            weather.ICON
+        ).setOrigin(0).setDepth(2)
 
         l.visual.temperature.setText(weather.TEMP + 'ºC')
         l.visual.humidity.setText(weather.HUMIDITY + '%')
@@ -62,12 +66,6 @@ const POWERUP_UTILS = {
 }
 
 export const POWERUPS = {
-
-    POSITION: {
-        X: 685.4,
-        Y: 146.4,
-        DELTA: 62.4,
-    },
 
     'Cold': {
         name: 'Cold',

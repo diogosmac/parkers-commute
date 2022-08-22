@@ -26,21 +26,53 @@ export const LEVEL = {
 
         const weather = level.DATA.WEATHER
         // // set weather on top left
-        level.visual.weather = level.add.image(53, 24, weather.ICON).setOrigin(0).setDepth(1)
+        level.visual.weather = level.add.image(
+            CST.POS.WEATHER.ICON[0],
+            CST.POS.WEATHER.ICON[1],
+            weather.ICON
+        ).setOrigin(0).setDepth(1)
         // // // set temperature and icon
-        level.visual.temperature = level.add.text(153.5, 41.5, weather.TEMP + 'ºC', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
-        level.add.image(177, 29, CST.ICONS.TEMPERATURE).setOrigin(0).setDepth(1)
+        level.visual.temperature = level.add.text(
+            CST.POS.WEATHER.TEMPERATURE.TEXT[0],
+            CST.POS.WEATHER.TEMPERATURE.TEXT[1],
+            weather.TEMP + 'ºC',
+            CST.STYLES.FLAVOR_SMALL
+        ).setOrigin(0.5)
+        level.add.image(
+            CST.POS.WEATHER.TEMPERATURE.ICON[0],
+            CST.POS.WEATHER.TEMPERATURE.ICON[1],
+            CST.ICONS.TEMPERATURE
+        ).setOrigin(0).setDepth(1)
         // // // set humidity and icon
-        level.visual.humidity = level.add.text(153.5, 76.5, weather.HUMIDITY + '%', CST.STYLES.FLAVOR_SMALL).setOrigin(0.5)
-        level.add.image(177, 64, CST.ICONS.HUMIDITY).setOrigin(0).setDepth(1)
-
-        // // set max battery for level on top right
-        level.add.image(695.55, 28, CST.ICONS.BATTERY).setOrigin(0).setDepth(1)
-        level.visual.BATTERY = level.add.text(661.78, 64, level.DATA.max_battery + '%', CST.STYLES.FLAVOR_LARGE).setOrigin(0.5)
-
+        level.visual.humidity = level.add.text(
+            CST.POS.WEATHER.HUMIDITY.TEXT[0],
+            CST.POS.WEATHER.HUMIDITY.TEXT[1],
+            weather.HUMIDITY + '%',
+            CST.STYLES.FLAVOR_SMALL
+        ).setOrigin(0.5)
+        level.add.image(
+            CST.POS.WEATHER.HUMIDITY.ICON[0],
+            CST.POS.WEATHER.HUMIDITY.ICON[1],
+            CST.ICONS.HUMIDITY
+        ).setOrigin(0).setDepth(1)
+        // // set max battery for level on top left
+        level.add.image(
+            CST.POS.BATTERY.ICON[0],
+            CST.POS.BATTERY.ICON[1],
+            CST.ICONS.BATTERY
+        ).setOrigin(0).setDepth(1)
+        level.visual.BATTERY = level.add.text(
+            CST.POS.BATTERY.TEXT[0],
+            CST.POS.BATTERY.TEXT[1],
+            level.DATA.max_battery + '%',
+            CST.STYLES.FLAVOR_LARGE
+        ).setOrigin(0.5)
         // // place map and power-up bar placeholders
-        level.add.image(53, 136, CST.PLACEHOLDER.MAP).setOrigin(0).setDepth(1)
-
+        level.add.image(
+            CST.POS.MAP[0],
+            CST.POS.MAP[1],
+            CST.PLACEHOLDER.MAP
+        ).setOrigin(0).setDepth(1)
         // // add destination selection outline image
         level.visual.dest_outline = level.add.image(
             0,
@@ -89,22 +121,30 @@ export const LEVEL = {
 
     placePowerUps(level) {
         if (!level.GAMEPLAY.hasOwnProperty('powerups')) {
-            level.add.image(675, 136, CST.PLACEHOLDER.POWERUPS).setOrigin(0).setDepth(1)
+            level.add.image(
+                CST.POS.POWERUPS.BAR[0],
+                CST.POS.POWERUPS.BAR[1],
+                CST.PLACEHOLDER.POWERUPS
+            ).setOrigin(0).setDepth(1)
             return
         }
-
-        level.add.image(675, 136, CST.LEVEL.POWERUPS.BAR).setOrigin(0).setDepth(1)
+        level.add.image(
+            CST.POS.POWERUPS.BAR[0],
+            CST.POS.POWERUPS.BAR[1],
+            CST.LEVEL.POWERUPS.BAR
+        ).setOrigin(0).setDepth(1)
         let i = 0
         level.visual.selected_powerups = {}
         level.visual.disabled_powerups = {}
         // only 4 maximum powerups allowed per level
         for (const name of level.GAMEPLAY.powerups.slice(0, 4)) {
             const p = POWERUPS[name]
-            const x = POWERUPS.POSITION.X
-            const y = POWERUPS.POSITION.Y + POWERUPS.POSITION.DELTA * i++
+            const x = CST.POS.POWERUPS.X
+            const y = CST.POS.POWERUPS.Y + CST.POS.POWERUPS.DELTA * i++
 
             const selected = level.add.image(
-                x - 4, y - 4, CST.LEVEL.POWERUPS.SELECTED
+                x - 4, y - 4,
+                CST.LEVEL.POWERUPS.SELECTED
             ).setOrigin(0).setDepth(2).setVisible(false)
 
             const icon = level.add.image(
@@ -113,7 +153,8 @@ export const LEVEL = {
 
             const disabledAtStart = POWERUPS[name].hasOwnProperty('requires')
             const disabled = level.add.image(
-                x, y, CST.LEVEL.POWERUPS.DISABLED
+                x, y,
+                CST.LEVEL.POWERUPS.DISABLED
             ).setOrigin(0).setDepth(4).setVisible(disabledAtStart)
             // makes 'disabled' block the clicks
             disabled.setInteractive()
@@ -173,8 +214,16 @@ export const LEVEL = {
          * @@@ INFO ON CROPPING IMAGES
          * https://www.html5gamedevs.com/topic/36973-showing-cropped-image/
          */
-        const full = level.add.image(53, 457 + 0, CST.LEVEL.ROUTE.BAR_FULL).setOrigin(0).setDepth(1)
-        level.add.image(53, 457, CST.LEVEL.ROUTE.BAR_EMPTY).setOrigin(0).setDepth(0)
+        const full = level.add.image(
+            CST.POS.ROUTE.BAR[0],
+            CST.POS.ROUTE.BAR[1],
+            CST.LEVEL.ROUTE.BAR_FULL
+        ).setOrigin(0).setDepth(1)
+        level.add.image(
+            CST.POS.ROUTE.BAR[0],
+            CST.POS.ROUTE.BAR[1],
+            CST.LEVEL.ROUTE.BAR_EMPTY
+        ).setOrigin(0).setDepth(0)
         full.displayWidth = 32.5
         level.visual.route_bar = full
     },
@@ -230,11 +279,13 @@ export const LEVEL = {
     placeRouteSlot(level, i, x, y) {
         if (i) {
             level.visual.openRoutes.push(
-                level.add.image(x, y, CST.LEVEL.ROUTE.OPEN).setOrigin(0).setDepth(2)
+                level.add.image(x, y,
+                    CST.LEVEL.ROUTE.OPEN).setOrigin(0).setDepth(2)
             )
             if (i > 1) {
                 level.visual.closedRoutes.push(
-                    level.add.image(x, y, CST.LEVEL.ROUTE.CLOSED).setOrigin(0).setDepth(3)
+                    level.add.image(x, y,
+                        CST.LEVEL.ROUTE.CLOSED).setOrigin(0).setDepth(3)
                 )
             }
         } else {
@@ -249,15 +300,32 @@ export const LEVEL = {
          * @@@ INFO ON CROPPING IMAGES
          * https://www.html5gamedevs.com/topic/36973-showing-cropped-image/
          */
-        const full = level.add.image(53, 528, CST.LEVEL.BATTERY.FULL).setOrigin(0).setDepth(1)
-        const usable = level.add.image(53, 528, CST.LEVEL.BATTERY.USABLE).setOrigin(0).setDepth(2)
-        const used = level.add.image(53, 528, CST.LEVEL.BATTERY.USED).setOrigin(0).setDepth(2)
+        const full = level.add.image(
+            CST.POS.BATTERY.BAR[0],
+            CST.POS.BATTERY.BAR[1],
+            CST.LEVEL.BATTERY.FULL
+        ).setOrigin(0).setDepth(1)
+        const usable = level.add.image(
+            CST.POS.BATTERY.BAR[0],
+            CST.POS.BATTERY.BAR[1],
+            CST.LEVEL.BATTERY.USABLE
+        ).setOrigin(0).setDepth(2)
+        const used = level.add.image(
+            CST.POS.BATTERY.BAR[0],
+            CST.POS.BATTERY.BAR[1],
+            CST.LEVEL.BATTERY.USED
+        ).setOrigin(0).setDepth(2)
         level.visual.battery_full = full
         usable.displayWidth = full.frame.width * level.DATA.max_battery_dec
         level.visual.battery_ref = usable
         used.displayWidth = 0
         level.visual.battery_bar = used
-        level.visual.battery_perc = level.add.text(542.64, 546.5, '0%', CST.STYLES.BATTERY_PERCENTAGE).setOrigin(0.5).setDepth(3)
+        level.visual.battery_perc = level.add.text(
+            CST.POS.BATTERY.PERCENTAGE[0],
+            CST.POS.BATTERY.PERCENTAGE[1],
+            '0%',
+            CST.STYLES.BATTERY_PERCENTAGE
+        ).setOrigin(0.5).setDepth(3)
     },
 
     updateBatteryPercentage(level, perc) {
@@ -337,7 +405,7 @@ export const LEVEL = {
                     this.checkRouteTouchInput(level, curr)
                     return
                 }
-                if (pointer.rightButtonDown()) {
+                if (pointer.rightButtonReleased()) {
                     this.checkAndRemoveRoute(level, curr)
                     return
                 }
@@ -347,8 +415,16 @@ export const LEVEL = {
     },
 
     setupGoButton(level) {
-        level.add.image(593, 528, CST.LEVEL.GO.UNUSABLE).setOrigin(0).setDepth(1)
-        let goButton = level.add.image(593, 528, CST.LEVEL.GO.USABLE).setOrigin(0).setDepth(1)
+        level.add.image(
+            CST.POS.GO[0],
+            CST.POS.GO[1],
+            CST.LEVEL.GO.UNUSABLE
+        ).setOrigin(0).setDepth(1)
+        let goButton = level.add.image(
+            CST.POS.GO[0],
+            CST.POS.GO[1],
+            CST.LEVEL.GO.USABLE
+        ).setOrigin(0).setDepth(1)
 
         goButton.setVisible(false)
         goButton.setInteractive()
@@ -368,7 +444,7 @@ export const LEVEL = {
         return goButton
     },
 
-    processInitCall(level, url) {
+    processInitCall(level) {
         const response = level.return
         if (response.status !== 'OK') {
             level.return = undefined
@@ -413,7 +489,7 @@ export const LEVEL = {
 
         if (level.DATA.hasOwnProperty('max_battery_dec')) {
             if (level.DATA.max_battery_dec > calc_battery) {
-                
+
             }
         }
 

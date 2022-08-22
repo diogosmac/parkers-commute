@@ -8,9 +8,9 @@ export const CONFIG = {
     API_URL: API_URL,
     ASSETS_URL: './assets',
     LOCATIONS: {
-        HOME:           localStorage.getItem('home')    || 'Avenida dos Aliados',
+        HOME:           localStorage.getItem('home')    || 'Maia',
         WORK:           localStorage.getItem('work')    || 'FEUP',
-        SUPERMARKET:    localStorage.getItem('market')  || 'LIDL Areosa',
-        GYM:            localStorage.getItem('gym')     || 'Fitness UP São João'
+        SUPERMARKET:    localStorage.getItem('market')  || 'Gaia Shopping',
+        GYM:            localStorage.getItem('gym')     || 'Solinca Ermesinde'
     },
 }
