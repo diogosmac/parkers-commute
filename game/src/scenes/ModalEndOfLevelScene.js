@@ -51,7 +51,7 @@ export class ModalEndOfLevelScene extends Phaser.Scene {
         ).setOrigin(0).setDepth(2)
         this.add.text(
             154, 281,
-            `Saved ${fuel} liters of gas, saving around ${money}€`,
+            `Saved ${fuel} liters of fuel, saving around ${money}€`,
             CST.STYLES.END_OF_LEVEL
         ).setOrigin(0).setDepth(2)
 

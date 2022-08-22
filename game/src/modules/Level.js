@@ -314,14 +314,29 @@ export const LEVEL = {
         }
     },
 
+    checkRouteTouchInput(level, curr) {
+        if (
+            level.GAMEPLAY.routes[curr] !== undefined &&
+            level.GAMEPLAY.routes[curr + 1] === undefined
+        ) {
+            this.checkAndRemoveRoute(level, curr)
+            return
+        }
+        this.checkAndAddRoute(level, curr)
+    },
+
     setupRoutes(level) {
         // iterating over indexes, not the actual closed routes
         for (let i in level.visual.closedRoutes) {
             if (i < 1) { continue }
             level.visual.openRoutes[i].setInteractive()
             if (i > 1) level.visual.closedRoutes[i].setInteractive()
-            level.visual.openRoutes[i].on(CST.MOUSE.CLICK, (pointer) => {
+            level.visual.openRoutes[i].on(CST.MOUSE.CLICK_RELEASE, (pointer) => {
                 let curr = parseInt(i)
+                if (pointer.wasTouch) {
+                    this.checkRouteTouchInput(level, curr)
+                    return
+                }
                 if (pointer.rightButtonDown()) {
                     this.checkAndRemoveRoute(level, curr)
                     return

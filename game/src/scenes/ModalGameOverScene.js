@@ -38,7 +38,7 @@ export class ModalGameOverScene extends Phaser.Scene {
         ).setOrigin(0).setDepth(3)
         const t_fuel = this.add.text(
             171, 384,
-            `Saved ${fuel} liters of gas, saving around ${money}€`,
+            `Saved ${fuel} liters of fuel, saving around ${money}€`,
             CST.STYLES.END_OF_LEVEL
         ).setOrigin(0).setDepth(3)
         const r_btn = this.add.image(
