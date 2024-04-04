@@ -592,6 +592,7 @@ export const LEVEL = {
         let orig = '&origin=' + waypoints[0]
         let dest = '&destination=' + waypoints[waypoints.length - 1]
         let url = base + pref + orig + dest
+        url = url.replace('//', '/')
         if (waypoints.length > 2) {
             let wayp = '&waypoints=' + waypoints.slice(1, waypoints.length - 1).join('|')
             url += wayp
