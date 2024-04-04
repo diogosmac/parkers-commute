@@ -15,6 +15,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           cd game
+          rm -rf .parcel-cache
           npm ci
           npm run build
         env:
