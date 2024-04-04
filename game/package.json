@@ -11,7 +11,7 @@
     "parcel": "2.6.2"
   },
   "scripts": {
-    "build": "parcel build *.html",
+    "build": "parcel build *.html --public-url ./",
     "start": "parcel *.html -p 1904"
   }
 }
